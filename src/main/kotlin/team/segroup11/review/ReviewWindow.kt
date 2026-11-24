@@ -42,6 +42,12 @@ internal fun column(vararg items: JComponent) = JPanel().apply {
     items.forEach { it.alignmentX = Component.LEFT_ALIGNMENT; add(it) }
 }
 
+internal fun loadedCommentCount(size: Int, nextPage: Int?): String = when {
+    size == 0 && nextPage == 1 -> ""
+    nextPage != null -> "已加载 ${size} 条评论"
+    else -> "${size} 条评论"
+}
+
 @Service(Service.Level.PROJECT)
 internal class ReviewJobs(val scope: CoroutineScope)
 
@@ -72,6 +78,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     private val issues = linkedMapOf<Long, IssueReviewTask>()
     private val title = JLabel("请选择 Issue")
     private val discussion = textArea().apply { isEditable = false }
+    private val commentCount = JLabel()
     private val discussionStatus = JLabel(" ")
     private val moreComments = button("加载评论") { loadComments() }
     private val open = button("GitHub 原文") { detail?.issueUrl?.let { BrowserUtil.browse(it) } }
@@ -128,7 +135,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         panelRight.add(column(title, actions), BorderLayout.NORTH)
         val thread = JPanel(BorderLayout())
         thread.add(JBScrollPane(discussion))
-        thread.add(line(discussionStatus, moreComments), BorderLayout.SOUTH)
+        thread.add(line(commentCount, discussionStatus, moreComments), BorderLayout.SOUTH)
         tabs.addTab("讨论", thread)
         tabs.addTab("评估报告", reportPanel)
         panelRight.add(tabs)
@@ -329,7 +336,9 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         val row = issues[id]
         title.text = row?.let { "#${it.numberValue}  ${it.summary}" } ?: if (id == null) "请选择 Issue" else "#$id"
         discussion.text = if (id == null) "" else "正在加载正文…"
+        commentCount.text = ""
         discussionStatus.text = " "
+        moreComments.isEnabled = id != null
         open.isEnabled = false
         val p = pointer()
         changingTab = true
@@ -371,7 +380,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             comments.clear()
             remote.forEach { comments[it.remoteId] = it }
             nextComments = null
-            discussionStatus.text = "已核对 ${remote.size} 条评论"
+            discussionStatus.text = "已核对"
             renderDiscussion()
             val choices = remote.reversed()
             val chooser = JComboBox(choices.toTypedArray()).apply {
@@ -405,7 +414,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             page.items.forEach { comments[it.remoteId] = it }
             nextComments = page.nextPage
             moreComments.isEnabled = nextComments != null
-            discussionStatus.text = "${comments.size} 条评论"
+            discussionStatus.text = " "
             renderDiscussion()
         }, {
             if (e == selection) { loadingComments = false; moreComments.isEnabled = true; discussionStatus.text = "评论读取失败：$it" }
@@ -413,6 +422,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     }
 
     private fun renderDiscussion() {
+        commentCount.text = loadedCommentCount(comments.size, nextComments)
         val task = detail ?: return
         val caret = discussion.caretPosition
         discussion.text = buildString {

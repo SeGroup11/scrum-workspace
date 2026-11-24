@@ -1,6 +1,5 @@
 package team.segroup11.review.github
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.tasks.TaskType
@@ -9,8 +8,7 @@ import org.jetbrains.plugins.github.api.GithubApiRequest
 import org.jetbrains.plugins.github.api.GithubApiRequestExecutor
 import org.jetbrains.plugins.github.api.GithubApiRequests
 import org.jetbrains.plugins.github.api.GithubServerPath
-import org.jetbrains.plugins.github.api.data.GithubIssue
-import org.jetbrains.plugins.github.api.data.GithubIssueComment
+import org.jetbrains.plugins.github.api.data.GithubIssueLabel
 import org.jetbrains.plugins.github.api.data.GithubIssueState
 import org.jetbrains.plugins.github.api.data.GithubUser
 import org.jetbrains.plugins.github.api.executeSuspend
@@ -26,19 +24,27 @@ import java.io.IOException
 import java.util.Date
 import java.util.Locale
 
-// Build 262's GithubIssue omits pull_request, GithubUser omits the numeric id, and
-// GithubIssueCommentWithHtml exposes rendered HTML only. Keep these wire fields in this adapter.
-internal class IssueWire : GithubIssue() {
-    @field:JsonProperty("pull_request") var pullRequest: Map<String, Any?>? = null
-    @field:JsonProperty("user") var optionalAuthor: GithubUser? = null
-    @field:JsonProperty("created_at") var optionalCreated: Date? = null
-    @field:JsonProperty("updated_at") var optionalUpdated: Date? = null
+// The IDE's decoder maps REST snake_case to these field names. Keep one field per JSON
+// property: duplicating an SDK superclass field with a plugin-owned annotation loses data
+// when the installed plugin and the IDE load Jackson annotations through different loaders.
+internal class IssueWire {
+    var number: Long = 0
+    var title: String = ""
+    var body: String? = null
+    var htmlUrl: String? = null
+    var state: GithubIssueState? = null
+    var labels: List<GithubIssueLabel>? = null
+    var pullRequest: Map<String, Any?>? = null
+    var user: GithubUser? = null
+    var createdAt: Date? = null
+    var updatedAt: Date? = null
 }
 internal class UserIdentity { var id: Long = 0 }
-internal class CommentWire : GithubIssueComment() {
+internal class CommentWire {
+    var id: Long = 0
     var body: String? = null
-    @field:JsonProperty("user") var optionalAuthor: GithubUser? = null
-    @field:JsonProperty("created_at") var optionalCreated: Date? = null
+    var user: GithubUser? = null
+    var createdAt: Date? = null
 }
 
 internal interface GitHubTransport { suspend fun <T> execute(request: GithubApiRequest<T>): T }
@@ -192,12 +198,12 @@ class GitHubGateway internal constructor(private val access: ConnectionAccess) {
             else -> throw GitHubFailure("Issue 开闭状态无法识别。")
         }
         return IssueReviewTask(session.repo, wire.number, wire.title, closed, if (detail) wire.body.orEmpty() else null,
-            detail, wire.optionalAuthor?.login, wire.optionalCreated?.toInstant(), wire.optionalUpdated?.toInstant(), wire.htmlUrl, type)
+            detail, wire.user?.login, wire.createdAt?.toInstant(), wire.updatedAt?.toInstant(), wire.htmlUrl, type)
     }
 
     private fun mapComment(wire: CommentWire): ReviewComment {
         if (wire.id <= 0 || wire.body == null) throw IOException("无有效评论回执。")
-        return ReviewComment(wire.id, wire.optionalAuthor?.login, wire.optionalCreated?.toInstant(), wire.body.orEmpty())
+        return ReviewComment(wire.id, wire.user?.login, wire.createdAt?.toInstant(), wire.body.orEmpty())
     }
 
     private suspend fun <T> githubCall(sending: Boolean = false, stage: GitHubAuthStage = GitHubAuthStage.REQUEST,
