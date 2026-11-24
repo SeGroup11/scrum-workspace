@@ -9,5 +9,7 @@
   "version": "0.2.0",
   "toolWindowId": "Issue Review",
   "officialLog": "pycharm-startup.log",
-  "uiWitness": "Project workspace contents and plugin tool window not confirmed by capture."
+  "uiWitness": "The user opened the project. The Issue Review tool window displayed the intended origin and the primary IDE GitHub account after normal OAuth; version 0.2.0 showed a generic GitHub authentication failure and no issues.",
+  "uiEvidence": "pycharm-project-trust.jpg",
+  "afterOAuth": "pycharm-connected-account-auth-failure.jpg"
 }

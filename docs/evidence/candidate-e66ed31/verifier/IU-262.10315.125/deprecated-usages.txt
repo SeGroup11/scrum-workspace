@@ -1,0 +1,5 @@
+Deprecated method com.openai.models.chat.completions.ChatCompletionMessage.functionCall() : java.util.Optional is invoked in team.segroup11.review.model.ModelGateway.evaluate$team_segroup11_github_issue_review(String, String, ModelProfile) : ModelResult
+Deprecated method com.intellij.openapi.wm.ToolWindowFactory.isDoNotActivateOnStart() : boolean is overridden in class team.segroup11.review.ReviewWindowFactory
+Deprecated method com.intellij.openapi.wm.ToolWindowFactory.isDoNotActivateOnStart() : boolean is invoked in team.segroup11.review.ReviewWindowFactory.isDoNotActivateOnStart() : boolean
+Deprecated method com.intellij.openapi.wm.ToolWindowFactory.isApplicable(com.intellij.openapi.project.Project project) : boolean is overridden in class team.segroup11.review.ReviewWindowFactory
+Deprecated method com.intellij.openapi.wm.ToolWindowFactory.isApplicable(com.intellij.openapi.project.Project project) : boolean is invoked in team.segroup11.review.ReviewWindowFactory.isApplicable(Project) : boolean

@@ -31,4 +31,10 @@
 | Sprint 2 | 增加模型、逐字引文、草稿、上下文和显式发送。独立检出 PR 提交 0457462 运行 17 项受控测试。 | [PR #19](https://github.com/SeGroup11/scrum-workspace/pull/19) · [17 项回归](https://github.com/SeGroup11/scrum-workspace/runs/138267977370) |
 | Sprint 3 | 在候选 2974097 重做干净构建、慢响应及四款 Verifier；修复报告分类说明和展开。 | [PR #21](https://github.com/SeGroup11/scrum-workspace/pull/21) · [逐项验收矩阵](acceptance.md) · [流程回查 #22](https://github.com/SeGroup11/scrum-workspace/issues/22) · [Release 草稿](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-ee81e4b2606f38839f92) |
 
+## 0.2.1 主账号实测与修复
+
+在故事 1.2 的 WebStorm 私仓实测中，旧包在主账号重新登录后仍给出笼统的身份验证失败提示。新包为所选账号增加原生重新认证入口，并区分身份验证、仓库读取及后续操作的失败。QA 复跑 21 个独立测试，记录了账号阶段错误、取消重认证和确认重认证的结果。[故事 #5](https://github.com/SeGroup11/scrum-workspace/issues/5) · [候选 e66ed31](https://github.com/SeGroup11/scrum-workspace/commit/e66ed311cf986d876814f7737f897b526322236a) · [QA Check](https://github.com/SeGroup11/scrum-workspace/runs/138292777291) · [0.2.1 验收矩阵](acceptance.md) · [0.2.0 历史矩阵](acceptance-0.2.0.md)
+
+看板有三个 Sprint，每个 Sprint 四张故事。各卡的实际状态可按序号回读。0.2.1 的锁定产物、课程材料及测试范围汇在新的发布草稿。[看板快照](candidate-e66ed31/github/project.json) · [S1 修复评审](https://github.com/SeGroup11/scrum-workspace/pull/18#pullrequestreview-6035485040) · [S3 候选评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6035485566) · [发布列表中的 v0.2.1-rc.1 草稿（ID 456437638）](https://github.com/SeGroup11/scrum-workspace/releases)
+
 三条产品分支在同一日实际执行。仓库分别保留主责组、交叉评审角色、Git 作者和 QA 身份。八名成员的姓名、独立成员评审、会议、真实用户反馈及其他组复现仅在实际发生后补入。
