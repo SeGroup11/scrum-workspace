@@ -6,6 +6,7 @@ plugins {
 kotlin { jvmToolchain(25) }
 
 dependencies {
+    implementation("com.openai:openai-java:4.112.0")
     testImplementation("junit:junit:4.13.2")
     intellijPlatform {
         val installed = providers.gradleProperty("localPlatformPath").orNull
