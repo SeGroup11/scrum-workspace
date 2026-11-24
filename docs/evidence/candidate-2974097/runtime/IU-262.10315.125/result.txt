@@ -1,0 +1,9 @@
+kotlin.Unit -> jar:file:/C:/Users/33583/AppData/Local/Programs/IntelliJ%20IDEA/lib/util-8.jar!/kotlin/Unit.class [com.intellij.util.lang.PathClassLoader]
+kotlin.reflect.jvm.internal.ReflectionFactoryImpl -> jar:file:/C:/Users/33583/AppData/Local/Programs/IntelliJ%20IDEA/lib/intellij.libraries.kotlin.reflect.jar!/kotlin/reflect/jvm/internal/ReflectionFactoryImpl.class [com.intellij.util.lang.PathClassLoader]
+com.fasterxml.jackson.databind.ObjectMapper -> jar:file:/C:/Users/33583/Documents/Code/CS5487GroupProject/build/evidence/candidate-2974097/runtime/20261124-144243313/IU-262.10315.125/plugins/github-issue-review/lib/jackson-databind-2.18.9.jar!/com/fasterxml/jackson/databind/ObjectMapper.class [com.intellij.ide.plugins.cl.PluginClassLoader]
+com.openai.client.okhttp.OpenAIOkHttpClient -> jar:file:/C:/Users/33583/Documents/Code/CS5487GroupProject/build/evidence/candidate-2974097/runtime/20261124-144243313/IU-262.10315.125/plugins/github-issue-review/lib/openai-java-client-okhttp-4.112.0.jar!/com/openai/client/okhttp/OpenAIOkHttpClient.class [com.intellij.ide.plugins.cl.PluginClassLoader]
+okhttp3.OkHttpClient -> jar:file:/C:/Users/33583/Documents/Code/CS5487GroupProject/build/evidence/candidate-2974097/runtime/20261124-144243313/IU-262.10315.125/plugins/github-issue-review/lib/okhttp-4.12.0.jar!/okhttp3/OkHttpClient.class [com.intellij.ide.plugins.cl.PluginClassLoader]
+JSON_OBJECT -> feature
+STRICT_SCHEMA -> feature
+requests=2
+PASS
