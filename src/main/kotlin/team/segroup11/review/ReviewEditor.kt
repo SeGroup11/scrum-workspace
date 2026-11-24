@@ -9,6 +9,7 @@ import com.intellij.ui.components.JBScrollPane
 import team.segroup11.review.github.*
 import team.segroup11.review.model.CheckRow
 import team.segroup11.review.model.ModelConfigurable
+import team.segroup11.review.model.ReviewReport
 import team.segroup11.review.state.*
 import java.awt.BorderLayout
 import java.awt.KeyboardFocusManager
@@ -30,6 +31,8 @@ internal class ReviewEditor(
     private val rows = JList(reportRows)
     private val reason = textArea(5).apply { isEditable = false }
     private val version = JLabel(" ")
+    private val kindReason = textArea(2).apply { isEditable = false; isOpaque = false }
+    private val showAll = JCheckBox("显示全部六项").apply { isVisible = false }
     private val use = button("用于回复") {
         val row = rows.selectedValue ?: return@button
         val suggestion = row.suggestion ?: return@button
@@ -63,7 +66,7 @@ internal class ReviewEditor(
     val footer = column(targetLabel, previewLabel, JBScrollPane(editor), line(send, check, stateLabel))
     private val reportSplit = JSplitPane(JSplitPane.VERTICAL_SPLIT, JBScrollPane(rows),
         JPanel(BorderLayout()).apply { add(JBScrollPane(reason)); add(line(use), BorderLayout.SOUTH) }).apply { resizeWeight = 0.55 }
-    val report = JPanel(BorderLayout()).apply { add(version, BorderLayout.NORTH); add(reportSplit) }
+    val report = JPanel(BorderLayout()).apply { add(column(line(version, showAll), kindReason), BorderLayout.NORTH); add(reportSplit) }
 
     private var pointer: ViewPointer? = null
     private var session: GitHubSession? = null
@@ -75,6 +78,7 @@ internal class ReviewEditor(
     private var binding = false
 
     init {
+        showAll.addActionListener { pointer?.let { renderRows(store.snapshot(it).report?.report) } }
         analyze.addActionListener {
             val p = pointer ?: return@addActionListener
             val task = currentDetail ?: return@addActionListener
@@ -128,6 +132,8 @@ internal class ReviewEditor(
         clearPreview()
         reportRows.clear()
         reason.text = ""
+        kindReason.text = ""
+        showAll.isVisible = false
         binding = true
         editor.text = p?.let { store.snapshot(it).draftText }.orEmpty()
         binding = false
@@ -139,6 +145,14 @@ internal class ReviewEditor(
     fun loaded(task: IssueReviewTask, hash: String) { currentDetail = task; detailHash = hash; update() }
 
     private fun clearPreview() { preview = null; previewLabel.text = " " }
+    private fun renderRows(report: ReviewReport?) {
+        val selected = rows.selectedValue?.id
+        reportRows.clear()
+        if (report == null) return
+        visibleChecks(report, showAll.isSelected).forEach(reportRows::addElement)
+        if (!reportRows.isEmpty) rows.selectedIndex = (0 until reportRows.size())
+            .firstOrNull { reportRows[it].id == selected } ?: 0
+    }
     private fun canSend(p: ViewPointer): Boolean {
         val snap = store.snapshot(p)
         return currentDetail?.numberValue == p.number && !snap.sending && snap.unknown == null && editor.text.isNotBlank()
@@ -156,9 +170,11 @@ internal class ReviewEditor(
         if (reportId != stored?.requestId) {
             reportId = stored?.requestId
             clearPreview()
-            reportRows.clear()
-            stored?.report?.rows?.sortedBy { it.status == "not_applicable" }?.forEach(reportRows::addElement)
-            if (!reportRows.isEmpty) rows.selectedIndex = 0
+            showAll.isVisible = stored?.report?.kind in setOf("bug", "feature")
+            showAll.isSelected = false
+            kindReason.text = stored?.report?.kindReason.orEmpty()
+            kindReason.caretPosition = 0
+            renderRows(stored?.report)
         }
         analyze.isEnabled = currentDetail != null && snap?.running == false
         analyze.text = if (snap?.running == true) "分析中…" else "分析"
@@ -167,13 +183,19 @@ internal class ReviewEditor(
         version.text = when {
             stored == null -> "尚无评估报告"
             detailHash != null && detailHash != stored.inputHash -> "基于较早版本 · ${stored.modelId}"
-            else -> "${stored.report.kind} · ${stored.modelId}"
+            else -> "${mapOf("feature" to "功能需求", "bug" to "缺陷报告", "mixed" to "混合类型", "undetermined" to "类型待确认")[stored.report.kind]} · ${stored.modelId}"
         }
         stateLabel.text = listOfNotNull(snap?.warning, snap?.analysisError,
             if (snap?.sending == true) "正在发送…" else snap?.sendNotice,
             if (snap?.unknown != null) "发布结果待确认" else null).joinToString(" · ").ifEmpty { " " }
         snap?.receipt?.let { if (it.remoteId != shownReceipt) { shownReceipt = it.remoteId; receipt(it) } }
     }
+}
+
+internal fun visibleChecks(report: ReviewReport, showAll: Boolean): List<CheckRow> {
+    if (showAll || report.kind !in setOf("bug", "feature")) return report.rows
+    val bugs = setOf("actual_behavior", "reproduction_steps", "expected_result")
+    return report.rows.filter { (it.id in bugs) == (report.kind == "bug") }
 }
 
 internal fun installSuggestionTab(editor: JTextArea, takePreview: () -> String?) {

@@ -13,6 +13,14 @@ import java.util.concurrent.atomic.AtomicInteger
 import javax.swing.*
 
 class SlowWorkflowTest {
+    @Test fun reportKeepsRegistryOrderAndCanExpandEveryCheck() {
+        val report = ReportCodec.parse(csvReport(), fixtureTitle, fixtureBody)
+        assertEquals(listOf("goal", "acceptance_criteria", "edge_cases"), visibleChecks(report, false).map { it.id })
+        assertEquals(report.rows, visibleChecks(report, true))
+        assertEquals(report.rows, visibleChecks(report.copy(kind = "mixed"), false))
+        assertEquals(report.rows, visibleChecks(report.copy(kind = "undetermined"), false))
+    }
+
     @Test fun tabPreservesSelectionAndConsumesExactlyOneSuggestion() {
         SwingUtilities.invokeAndWait {
             val draft = JTextArea("前文  保留\n后文")
