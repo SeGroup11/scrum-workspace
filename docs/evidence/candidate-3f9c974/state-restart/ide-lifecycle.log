@@ -1,0 +1,8 @@
+2026-11-24 16:57:31,894 [     13]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE STARTED ------------------------------------------------------
+2026-11-24 16:57:31,944 [     63]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 16:57:33,111 [   1230]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.3), Group 11 restart probe (1)
+2026-11-24 16:57:51,638 [  19757]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------
+2026-11-24 16:57:54,650 [      9]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE STARTED ------------------------------------------------------
+2026-11-24 16:57:54,707 [     66]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 16:57:56,213 [   1572]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.3), Group 11 restart probe (1)
+2026-11-24 16:58:13,917 [  19276]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------

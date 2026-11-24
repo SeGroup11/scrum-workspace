@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="team.segroup11.review.SlowWorkflowTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-11-24T08:51:24.158Z" hostname="HUAWEI" time="23.34">
+  <properties/>
+  <testcase name="reportKeepsRegistryOrderAndCanExpandEveryCheck" classname="team.segroup11.review.SlowWorkflowTest" time="0.154"/>
+  <testcase name="discussionCountReflectsReceiptsAndLoadedPages" classname="team.segroup11.review.SlowWorkflowTest" time="0.003"/>
+  <testcase name="tabPreservesSelectionAndConsumesExactlyOneSuggestion" classname="team.segroup11.review.SlowWorkflowTest" time="1.566"/>
+  <testcase name="slowSuccessAndErrorKeepEditsAndOnlyReplaceTheOriginalReportOnSuccess" classname="team.segroup11.review.SlowWorkflowTest" time="21.611"/>
+  <system-out><![CDATA[controlled HTTP round=1 calls=1 elapsed_ms=11498
+controlled HTTP round=2 calls=2 elapsed_ms=10029
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

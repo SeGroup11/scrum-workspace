@@ -1,0 +1,22 @@
+{
+  "activeTasks": [
+    {
+      "id": "github.com/segroup11/scrum-workspace#16",
+      "active": false
+    },
+    {
+      "id": "github.com/segroup11/scrum-workspace#17",
+      "active": true
+    }
+  ],
+  "nativeSavedContexts": [
+    {
+      "entry": "/github.com/segroup11/scrum-workspace#16.task.xml",
+      "node": "<segroup11-issue-review><view account=\"github.com:78433511\" repo=\"github.com/segroup11/scrum-workspace\" number=\"16\" tab=\"0\" /></segroup11-issue-review>"
+    },
+    {
+      "entry": "/github.com/segroup11/scrum-workspace#17.task.xml",
+      "node": "<segroup11-issue-review><view account=\"github.com:78433511\" repo=\"github.com/segroup11/scrum-workspace\" number=\"17\" tab=\"1\" /></segroup11-issue-review>"
+    }
+  ]
+}

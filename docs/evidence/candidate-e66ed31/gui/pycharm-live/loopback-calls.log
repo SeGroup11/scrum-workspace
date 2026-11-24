@@ -1,0 +1,4 @@
+Base URL http://127.0.0.1:18535/v1
+calls=1 case=slow-success elapsed_ms=10000
+calls=2 case=slow-error elapsed_ms=10016
+calls=3 case=slow-success elapsed_ms=10000

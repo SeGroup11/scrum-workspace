@@ -1,0 +1,6 @@
+2026-11-24 17:03:05,921 [ 440481]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=6
+2026-11-24 17:03:16,403 [ 450963]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10485
+2026-11-24 17:23:57,236 [1691796]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=5
+2026-11-24 17:24:07,315 [1701875]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10084
+2026-11-24 17:24:37,578 [1732138]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=71
+2026-11-24 17:24:47,525 [1742085]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10015

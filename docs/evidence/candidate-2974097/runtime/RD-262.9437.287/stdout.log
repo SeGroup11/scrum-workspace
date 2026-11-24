@@ -1,0 +1,7 @@
+Installation home directory: file:///C:/Program Files/JetBrains/JetBrains Rider 2024.2.6
+System directory: file:///C:/Users/33583/Documents/Code/CS5487GroupProject/build/evidence/candidate-2974097/runtime/20261124-144243313/RD-262.9437.287/system
+Config directory: file:///C:/Users/33583/Documents/Code/CS5487GroupProject/build/evidence/candidate-2974097/runtime/20261124-144243313/RD-262.9437.287/config
+Log directory: file:///C:/Users/33583/Documents/Code/CS5487GroupProject/build/evidence/candidate-2974097/runtime/20261124-144243313/RD-262.9437.287/logs
+Debug | ByteBufferAsyncProcessor  | 30:DefaultDispatcher-worker-10 | PAUSE ('Socket not connected') :: {id = FrontendToBackend/Sender, state = 'Initialized'} 
+Debug | Server                    | 76:FrontendToBackend | FrontendToBackend: listening /127.0.0.1:6365 
+No valid license found

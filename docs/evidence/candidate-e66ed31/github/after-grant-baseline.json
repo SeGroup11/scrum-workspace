@@ -1,0 +1,22 @@
+{
+  "scope": "After user confirmed organization Grant; baseline for subsequent explicit IDE comment checks",
+  "issues": [
+    {
+      "number": 16,
+      "title": "导出文件为空",
+      "state": "open",
+      "updated_at": "2026-11-24T06:11:32Z",
+      "comments": 0,
+      "url": "https://github.com/SeGroup11/scrum-workspace/issues/16"
+    },
+    {
+      "number": 17,
+      "title": "导出搜索结果",
+      "state": "open",
+      "updated_at": "2026-11-24T06:11:34Z",
+      "comments": 0,
+      "url": "https://github.com/SeGroup11/scrum-workspace/issues/17"
+    }
+  ],
+  "observedUtc": "2026-11-24T08:07:25.4267043+00:00"
+}

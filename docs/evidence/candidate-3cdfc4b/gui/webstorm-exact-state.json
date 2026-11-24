@@ -1,0 +1,32 @@
+{
+  "source": ".idea/workspace.xml/Group11IssueReview",
+  "observedUtc": "2026-11-24T09:59:52.1895734+00:00",
+  "lastIssue": "17",
+  "lastTab": "1",
+  "records": [
+    {
+      "number": 16,
+      "draftLength": 20,
+      "equalsExpected": true,
+      "containsBlankLine": true,
+      "hasTab": true,
+      "endsWithTwoSpaces": true,
+      "revision": "17",
+      "tab": "0",
+      "reportId": "2355c9d0-7198-4171-9e28-4bcb716503b3",
+      "draftSHA256": "5DFFEF74048C6947A77B4B279E32D9639F0A0E1E2A22083D4135783263F873A5"
+    },
+    {
+      "number": 17,
+      "draftLength": 0,
+      "equalsExpected": true,
+      "containsBlankLine": false,
+      "hasTab": false,
+      "endsWithTwoSpaces": false,
+      "revision": "27",
+      "tab": "1",
+      "reportId": "e4e3d866-4802-4a39-9699-b61bac92a54e",
+      "draftSHA256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+2026-11-24 17:32:24,187 [     18]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE STARTED ------------------------------------------------------
+2026-11-24 17:32:24,289 [    120]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 17:32:27,045 [   2876]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.4), Group 11 restart probe (1)
+2026-11-24 17:32:53,662 [  29493]   INFO - #c.i.u.i.UnindexedFilesScanner - [b7a5538] Started scanning for indexing of [QA-Project]. Reason: On project open
+2026-11-24 17:32:59,785 [  35616]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------
+2026-11-24 17:33:03,040 [     15]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE STARTED ------------------------------------------------------
+2026-11-24 17:33:03,118 [     93]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 17:33:05,192 [   2167]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.4), Group 11 restart probe (1)
+2026-11-24 17:33:32,822 [  29797]   INFO - #c.i.u.i.UnindexedFilesScanner - [b7a5538] Started scanning for indexing of [QA-Project]. Reason: On project open
+2026-11-24 17:33:34,993 [  31968]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------

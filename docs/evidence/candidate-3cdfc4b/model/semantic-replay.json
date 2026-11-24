@@ -1,0 +1,108 @@
+{
+  "commit" : "3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835",
+  "zipSha256" : "a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709",
+  "reports" : [ {
+    "issue" : "https://github.com/SeGroup11/scrum-workspace/issues/16",
+    "inputHash" : "1d747a69ce31dd44f21f0c358ba04127e74fcf49d05e62d46c4840a5492471e3",
+    "modelMode" : "loopback/success/json_object",
+    "validatedReport" : {
+      "schemaVersion" : "1",
+      "kind" : "bug",
+      "kindReason" : "提交者报告了导出故障。",
+      "checks" : {
+        "actual_behavior" : {
+          "status" : "clear",
+          "reason" : "标题明确指出导出文件为空。",
+          "evidence" : {
+            "source" : "title",
+            "quote" : "导出文件为空"
+          },
+          "suggestion" : null
+        },
+        "reproduction_steps" : {
+          "status" : "missing",
+          "reason" : "此受控夹具要求再次确认该项。",
+          "evidence" : null,
+          "suggestion" : "能否提供最小复现步骤和预期输出？"
+        },
+        "expected_result" : {
+          "status" : "missing",
+          "reason" : "此受控夹具要求再次确认该项。",
+          "evidence" : null,
+          "suggestion" : "能否提供最小复现步骤和预期输出？"
+        },
+        "goal" : {
+          "status" : "not_applicable",
+          "reason" : "这是故障报告。",
+          "evidence" : null,
+          "suggestion" : null
+        },
+        "acceptance_criteria" : {
+          "status" : "not_applicable",
+          "reason" : "这是故障报告。",
+          "evidence" : null,
+          "suggestion" : null
+        },
+        "edge_cases" : {
+          "status" : "not_applicable",
+          "reason" : "这是故障报告。",
+          "evidence" : null,
+          "suggestion" : null
+        }
+      }
+    }
+  }, {
+    "issue" : "https://github.com/SeGroup11/scrum-workspace/issues/17",
+    "inputHash" : "29cda48e6b71fff174eed4081107172353c200807ed59fb66da179a13f8893b4",
+    "modelMode" : "loopback/success/json_object",
+    "validatedReport" : {
+      "schemaVersion" : "1",
+      "kind" : "feature",
+      "kindReason" : "提交者希望增加搜索结果导出功能。",
+      "checks" : {
+        "actual_behavior" : {
+          "status" : "not_applicable",
+          "reason" : "该请求提出新能力，没有报告正在发生的故障。",
+          "evidence" : null,
+          "suggestion" : null
+        },
+        "reproduction_steps" : {
+          "status" : "not_applicable",
+          "reason" : "没有待复现的缺陷。",
+          "evidence" : null,
+          "suggestion" : null
+        },
+        "expected_result" : {
+          "status" : "not_applicable",
+          "reason" : "本项比较故障与预期；此处的期望归入功能目标和验收标准。",
+          "evidence" : null,
+          "suggestion" : null
+        },
+        "goal" : {
+          "status" : "clear",
+          "reason" : "说明了导出的数据对象和目标文件格式。",
+          "evidence" : {
+            "source" : "body",
+            "quote" : "希望将搜索结果导出为 CSV。"
+          },
+          "suggestion" : null
+        },
+        "acceptance_criteria" : {
+          "status" : "unclear",
+          "reason" : "“快”没有对应的数据量和可接受耗时，无法复核。",
+          "evidence" : {
+            "source" : "body",
+            "quote" : "导出要快"
+          },
+          "suggestion" : "请说明典型导出数据量，以及该规模下可以接受的完成时间。"
+        },
+        "edge_cases" : {
+          "status" : "missing",
+          "reason" : "没有说明搜索结果为空时怎样处理导出。",
+          "evidence" : null,
+          "suggestion" : "当搜索结果为空时，您希望导出功能如何反馈？"
+        }
+      }
+    }
+  } ]
+}

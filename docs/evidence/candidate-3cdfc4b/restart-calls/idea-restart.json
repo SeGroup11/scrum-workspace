@@ -1,0 +1,30 @@
+{
+  "product": "idea",
+  "pid": 16024,
+  "processStartUtc": "2026-11-24T10:03:29.5798923Z",
+  "observedUtc": "2026-11-24T10:06:33.2800919+00:00",
+  "recordingSha256": "2ecfded9607333100a941751cba215ed339fe32cc6e6dc3b30800018c061ecb1",
+  "counts": {
+    "connect": 1,
+    "detail": 2,
+    "postComment": 0,
+    "evaluate": 0
+  },
+  "methods": [
+    {
+      "at": "2026-11-24T18:03:38.798264300+08:00",
+      "method": "connect",
+      "class": "team/segroup11/review/github/GitHubGateway"
+    },
+    {
+      "at": "2026-11-24T18:03:40.682505+08:00",
+      "method": "detail",
+      "class": "team/segroup11/review/github/GitHubGateway"
+    },
+    {
+      "at": "2026-11-24T18:05:45.329497900+08:00",
+      "method": "detail",
+      "class": "team/segroup11/review/github/GitHubGateway"
+    }
+  ]
+}

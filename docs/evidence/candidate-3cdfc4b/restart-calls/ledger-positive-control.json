@@ -1,0 +1,22 @@
+[
+  {
+    "at": "2026-11-24T17:48:57.417475900+08:00",
+    "method": "connect",
+    "class": "team/segroup11/review/github/GitHubGateway"
+  },
+  {
+    "at": "2026-11-24T17:48:58.129010800+08:00",
+    "method": "postComment",
+    "class": "team/segroup11/review/github/GitHubGateway"
+  },
+  {
+    "at": "2026-11-24T17:48:58.135503+08:00",
+    "method": "postComment",
+    "class": "team/segroup11/review/github/GitHubGateway"
+  },
+  {
+    "at": "2026-11-24T17:48:58.174814800+08:00",
+    "method": "postComment",
+    "class": "team/segroup11/review/github/GitHubGateway"
+  }
+]

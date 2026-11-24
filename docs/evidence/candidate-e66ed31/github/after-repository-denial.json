@@ -1,0 +1,16 @@
+{
+  "observedUtc": "2026-11-24T07:51:41.9512659+00:00",
+  "issues": [
+    {
+      "number": 16,
+      "count": 0,
+      "comments": []
+    },
+    {
+      "number": 17,
+      "count": 0,
+      "comments": []
+    }
+  ],
+  "scope": "After first from-disk WebStorm and PyCharm repository denial, before organization authorization changes"
+}

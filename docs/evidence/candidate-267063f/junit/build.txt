@@ -1,0 +1,5 @@
+267063f8d7fc2d321f03d386b2ce9c64553c916c
+github-issue-review-0.2.2.zip 75390776 bytes SHA256 b2eed1cd59d1f9f6f2231c55bb6c0d97ab82c5a6da27963c2a934053739bedf0
+Clean git archive; Gradle test buildPlugin with --no-build-cache
+BUILD SUCCESSFUL in 7m 52s
+19 actionable tasks: 19 executed

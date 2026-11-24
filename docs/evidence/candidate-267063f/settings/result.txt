@@ -1,0 +1,6 @@
+A: saved and resolved the synthetic credential.
+B: changing host without a key produced the endpoint-specific missing-key error.
+A: switching back without a new key restored the original synthetic credential.
+Project-One: actual registered Settings form shows the same base URL and model.
+Project-Two: actual registered Settings form shows the same base URL and model.
+PASS

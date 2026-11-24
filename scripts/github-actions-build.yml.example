@@ -1,0 +1,28 @@
+name: Plugin build and tests
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build plugin and run JVM tests
+        run: bash gradlew --no-daemon test buildPlugin
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: plugin-and-test-reports
+          path: |
+            build/distributions/*.zip
+            build/reports/tests/test/
