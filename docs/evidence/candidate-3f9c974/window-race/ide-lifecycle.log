@@ -1,0 +1,7 @@
+2026-11-24 17:20:12,575 [     45]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 17:20:13,418 [    888]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.3), Group 11 window race probe (1)
+2026-11-24 17:20:25,953 [  13423]   INFO - #c.i.p.p.ProjectEntitiesStorage - Project ProjectId#im6ca58dg8lntd7eu9f5 is disposed, removing entity
+2026-11-24 17:20:26,000 [  13470]   INFO - #c.i.w.i.i.GlobalWorkspaceModel - Project Window-QA is removed from the list of initializing and open projects. Project is being disposed.
+2026-11-24 17:20:30,829 [  18299]   INFO - #c.i.p.p.ProjectEntitiesStorage - Project ProjectId#2ft3atq20i5t4o3sb80h is disposed, removing entity
+2026-11-24 17:20:32,809 [  20279]   INFO - #c.i.w.i.i.GlobalWorkspaceModel - Project Window-QA is removed from the list of initializing and open projects. Project is being disposed.
+2026-11-24 17:20:34,183 [  21653]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------

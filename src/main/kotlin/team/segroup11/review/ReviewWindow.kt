@@ -161,7 +161,16 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         panel.add(JBSplitter(false, 0.29f).apply { firstComponent = left; secondComponent = panelRight })
         repoBox.renderer = labelRenderer { (it as? RepoChoice)?.label ?: "选择仓库" }
         accountBox.renderer = labelRenderer { (it as? AccountChoice)?.login ?: "选择账号" }
-        list.addListSelectionListener { if (!it.valueIsAdjusting && !updating) list.selectedValue?.let { row -> selectIssue(row.numberValue) } }
+        list.addListSelectionListener {
+            if (it.valueIsAdjusting || updating) return@addListSelectionListener
+            val row = list.selectedValue ?: return@addListSelectionListener
+            if (awaitingRestore != null) {
+                // An explicit choice in this connection supersedes the old task's pending locator.
+                awaitingRestore = null
+                showConnectedAccount()
+            }
+            selectIssue(row.numberValue)
+        }
         filter.addActionListener { resetList() }
         query.onChange { searchTimer.restart() }
         repoBox.addActionListener { if (!updating) { invalidateConnection(); updateAccounts() } }
@@ -267,10 +276,16 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             session = result
             props.setValue("issueReview.repo", target.key.canonical)
             props.setValue("issueReview.account", account.id)
-            connection.text = "${target.label} · ${account.login}"
+            showConnectedAccount()
             resetList()
             (awaitingRestore ?: store.lastView)?.let(::restoreView)
         }, { if (e == epoch) connection.text = it })
+    }
+
+    private fun showConnectedAccount() {
+        val target = repoBox.selectedItem as? RepoChoice ?: return
+        val account = accountBox.selectedItem as? AccountChoice ?: return
+        connection.text = "${target.label} · ${account.login}"
     }
 
     private fun reauthenticate() {
