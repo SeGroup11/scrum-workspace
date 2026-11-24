@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>team.segroup11.issue-review</id>
-    <name>GitHub Issue 质量评审</name>
+    <name>GitHub Issue Quality Review</name>
     <vendor>CS5351 Group 11</vendor>
     <description>Browse issues using your IDE GitHub account and review the original text in a project tool window.</description>
     <depends>com.intellij.modules.platform</depends>
