@@ -149,7 +149,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         })
         title.putClientProperty("html.disable", true)
         panel.add(JBSplitter(false, 0.29f).apply { firstComponent = left; secondComponent = panelRight })
-        repoBox.renderer = labelRenderer { (it as? RepoChoice)?.key?.canonical ?: "选择仓库" }
+        repoBox.renderer = labelRenderer { (it as? RepoChoice)?.label ?: "选择仓库" }
         accountBox.renderer = labelRenderer { (it as? AccountChoice)?.login ?: "选择账号" }
         list.addListSelectionListener { if (!it.valueIsAdjusting && !updating) list.selectedValue?.let { row -> selectIssue(row.numberValue) } }
         filter.addActionListener { resetList() }

@@ -79,7 +79,7 @@ private class IdeConnectionAccess(private val project: Project) : ConnectionAcce
         val repositories = buildList {
             for (root in roots) for (remote in root.remotes) for (url in remote.urls) for (server in servers) {
                 val key = repositoryOf(url, server.toURI()) ?: continue
-                add(RepoChoice(key, "${root.root.presentableUrl} / ${remote.name} / ${key.owner}/${key.repo}"))
+                add(RepoChoice(key, "${root.root.name} · ${remote.name} · ${key.canonical}"))
             }
         }.distinctBy { it.key }
         return Discovery(repositories, accounts.map { AccountChoice(it.id, it.name, serverKey(it.server.toURI())) },
