@@ -1,0 +1,12 @@
+Definite 403 -> 0 persisted; explicit retry -> 1; second scenario accepted before disconnect -> total 2. Two GETs on #42 deduped to 2, #43 remained 0. Three explicit POST attempts; duplicate clicks and restart produced 0 POST. Original-target receipt 7101; both newer drafts retained.
+GET /user
+GET /repos/group11/recovery
+GET /user
+POST /repos/group11/recovery/issues/42/comments
+GET /user
+POST /repos/group11/recovery/issues/42/comments
+GET /user
+POST /repos/group11/recovery/issues/42/comments
+GET /repos/group11/recovery/issues/42/comments
+GET /repos/group11/recovery/issues/42/comments
+GET /repos/group11/recovery/issues/43/comments

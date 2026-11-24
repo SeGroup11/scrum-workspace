@@ -1,6 +1,5 @@
 package team.segroup11.review.github
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.tasks.TaskType
@@ -9,34 +8,43 @@ import org.jetbrains.plugins.github.api.GithubApiRequest
 import org.jetbrains.plugins.github.api.GithubApiRequestExecutor
 import org.jetbrains.plugins.github.api.GithubApiRequests
 import org.jetbrains.plugins.github.api.GithubServerPath
-import org.jetbrains.plugins.github.api.data.GithubIssue
-import org.jetbrains.plugins.github.api.data.GithubIssueComment
+import org.jetbrains.plugins.github.api.data.GithubIssueLabel
 import org.jetbrains.plugins.github.api.data.GithubIssueState
 import org.jetbrains.plugins.github.api.data.GithubUser
 import org.jetbrains.plugins.github.api.executeSuspend
 import org.jetbrains.plugins.github.authentication.GHAccountsUtil
+import org.jetbrains.plugins.github.authentication.GHLoginSource
 import org.jetbrains.plugins.github.authentication.accounts.GHAccountManager
 import org.jetbrains.plugins.github.authentication.accounts.GithubAccount
 import org.jetbrains.plugins.github.exceptions.GithubAuthenticationException
 import org.jetbrains.plugins.github.exceptions.GithubRateLimitExceededException
 import org.jetbrains.plugins.github.exceptions.GithubStatusCodeException
+import java.awt.Component
 import java.io.IOException
 import java.util.Date
 import java.util.Locale
 
-// Build 262's GithubIssue omits pull_request, GithubUser omits the numeric id, and
-// GithubIssueCommentWithHtml exposes rendered HTML only. Keep these wire fields in this adapter.
-internal class IssueWire : GithubIssue() {
-    @field:JsonProperty("pull_request") var pullRequest: Map<String, Any?>? = null
-    @field:JsonProperty("user") var optionalAuthor: GithubUser? = null
-    @field:JsonProperty("created_at") var optionalCreated: Date? = null
-    @field:JsonProperty("updated_at") var optionalUpdated: Date? = null
+// The IDE's decoder maps REST snake_case to these field names. Keep one field per JSON
+// property: duplicating an SDK superclass field with a plugin-owned annotation loses data
+// when the installed plugin and the IDE load Jackson annotations through different loaders.
+internal class IssueWire {
+    var number: Long = 0
+    var title: String = ""
+    var body: String? = null
+    var htmlUrl: String? = null
+    var state: GithubIssueState? = null
+    var labels: List<GithubIssueLabel>? = null
+    var pullRequest: Map<String, Any?>? = null
+    var user: GithubUser? = null
+    var createdAt: Date? = null
+    var updatedAt: Date? = null
 }
 internal class UserIdentity { var id: Long = 0 }
-internal class CommentWire : GithubIssueComment() {
+internal class CommentWire {
+    var id: Long = 0
     var body: String? = null
-    @field:JsonProperty("user") var optionalAuthor: GithubUser? = null
-    @field:JsonProperty("created_at") var optionalCreated: Date? = null
+    var user: GithubUser? = null
+    var createdAt: Date? = null
 }
 
 internal interface GitHubTransport { suspend fun <T> execute(request: GithubApiRequest<T>): T }
@@ -46,6 +54,7 @@ internal data class BoundAccount(val server: GithubServerPath, val transport: Gi
 internal interface ConnectionAccess {
     fun discover(): Discovery
     fun isAvailable(id: String, repo: RepoKey): Boolean
+    fun reauthenticate(id: String, repo: RepoKey, parent: Component): Boolean
     suspend fun bind(id: String, repo: RepoKey): BoundAccount
 }
 
@@ -57,7 +66,14 @@ class GitHubSession internal constructor(
     internal val issuesUrl = "${server.toApiUrl().trimEnd('/')}/repos/${repo.owner}/${repo.repo}/issues"
 }
 
-class GitHubFailure(message: String, val outcomeUnknown: Boolean = false) : IOException(message)
+enum class GitHubAuthStage(val guidance: String) {
+    IDENTITY("GitHub 未能验证当前账号身份。请重新认证所选账号，再连接。"),
+    REPOSITORY("账号身份已核实，GitHub 未允许访问此仓库。请核对仓库地址和该账号的组织或 OAuth 应用授权。"),
+    REQUEST("GitHub 未允许本次操作。请核对账号、仓库权限及组织授权，必要时重新认证。")
+}
+
+class GitHubFailure(message: String, val outcomeUnknown: Boolean = false, val authStage: GitHubAuthStage? = null) :
+    IOException(message)
 
 private fun currentAccounts() = service<GHAccountManager>().accountsState.value
 
@@ -69,7 +85,7 @@ private class IdeConnectionAccess(private val project: Project) : ConnectionAcce
         val repositories = buildList {
             for (root in roots) for (remote in root.remotes) for (url in remote.urls) for (server in servers) {
                 val key = repositoryOf(url, server.toURI()) ?: continue
-                add(RepoChoice(key, "${root.root.presentableUrl} / ${remote.name} / ${key.owner}/${key.repo}"))
+                add(RepoChoice(key, "${root.root.name} · ${remote.name} · ${key.canonical}"))
             }
         }.distinctBy { it.key }
         return Discovery(repositories, accounts.map { AccountChoice(it.id, it.name, serverKey(it.server.toURI())) },
@@ -80,6 +96,12 @@ private class IdeConnectionAccess(private val project: Project) : ConnectionAcce
         currentAccounts().firstOrNull { it.id == id && serverKey(it.server.toURI()) == repo.server }
 
     override fun isAvailable(id: String, repo: RepoKey) = account(id, repo) != null
+
+    override fun reauthenticate(id: String, repo: RepoKey, parent: Component): Boolean {
+        val selected = account(id, repo) ?: throw GitHubFailure("所选账号已移除或服务地址不匹配，请重新选择。")
+        // The IDE updates the original account's PasswordSafe entry itself. A cancelled dialog returns null.
+        return GHAccountsUtil.requestReLogin(selected, project, parent, loginSource = GHLoginSource.TRACKER) != null
+    }
 
     override suspend fun bind(id: String, repo: RepoKey): BoundAccount {
         val account = account(id, repo) ?: throw GitHubFailure("所选账号已移除或服务地址不匹配，请重新选择。")
@@ -98,13 +120,17 @@ class GitHubGateway internal constructor(private val access: ConnectionAccess) {
 
     fun discover(): Discovery = access.discover()
 
-    suspend fun connect(repo: RepoKey, accountId: String): GitHubSession = githubCall {
+    /** Opens the IDE login dialog for the existing account. Invoke from the event dispatch thread. */
+    fun reauthenticate(accountId: String, repo: RepoKey, parentComponent: Component): Boolean =
+        access.reauthenticate(accountId, repo, parentComponent)
+
+    suspend fun connect(repo: RepoKey, accountId: String): GitHubSession = githubCall(stage = GitHubAuthStage.REPOSITORY) {
         if (discover().repositories.none { it.key == repo }) throw GitHubFailure("项目已不包含所选远程仓库，请重新选择。")
         val account = access.bind(accountId, repo)
         val executor = account.transport
         val uid = userId(executor, account.server)
         val found = executor.execute(GithubApiRequests.Repos.get(account.server, repo.owner, repo.repo))
-            ?: throw GitHubFailure("所选账号无法读取目标仓库。")
+            ?: throw GitHubFailure(GitHubAuthStage.REPOSITORY.guidance, authStage = GitHubAuthStage.REPOSITORY)
         val canonical = RepoKey(repo.server, found.userName, found.name)
         if (canonical != repo) throw GitHubFailure("仓库已更名或转移，请更新项目 remote 后重新选择。")
         GitHubSession(canonical, accountId, uid, account.server, executor)
@@ -151,10 +177,10 @@ class GitHubGateway internal constructor(private val access: ConnectionAccess) {
         if (!access.isAvailable(id, repo)) throw GitHubFailure("所选账号已移除或服务地址不匹配，请打开 IDE GitHub 设置。")
     }
 
-    private suspend fun userId(executor: GitHubTransport, server: GithubServerPath): Long {
+    private suspend fun userId(executor: GitHubTransport, server: GithubServerPath): Long = githubCall(stage = GitHubAuthStage.IDENTITY) {
         val id = executor.execute(GithubApiRequest.Get.json<UserIdentity>("${server.toApiUrl().trimEnd('/')}/user")).id
         if (id <= 0) throw GitHubFailure("GitHub 未返回有效的认证用户编号。")
-        return id
+        id
     }
 
     private fun mapIssue(wire: IssueWire, session: GitHubSession, detail: Boolean): IssueReviewTask {
@@ -172,32 +198,34 @@ class GitHubGateway internal constructor(private val access: ConnectionAccess) {
             else -> throw GitHubFailure("Issue 开闭状态无法识别。")
         }
         return IssueReviewTask(session.repo, wire.number, wire.title, closed, if (detail) wire.body.orEmpty() else null,
-            detail, wire.optionalAuthor?.login, wire.optionalCreated?.toInstant(), wire.optionalUpdated?.toInstant(), wire.htmlUrl, type)
+            detail, wire.user?.login, wire.createdAt?.toInstant(), wire.updatedAt?.toInstant(), wire.htmlUrl, type)
     }
 
     private fun mapComment(wire: CommentWire): ReviewComment {
         if (wire.id <= 0 || wire.body == null) throw IOException("无有效评论回执。")
-        return ReviewComment(wire.id, wire.optionalAuthor?.login, wire.optionalCreated?.toInstant(), wire.body.orEmpty())
+        return ReviewComment(wire.id, wire.user?.login, wire.createdAt?.toInstant(), wire.body.orEmpty())
     }
 
-    private suspend fun <T> githubCall(sending: Boolean = false, action: suspend () -> T): T = try {
+    private suspend fun <T> githubCall(sending: Boolean = false, stage: GitHubAuthStage = GitHubAuthStage.REQUEST,
+                                       action: suspend () -> T): T = try {
         action()
     } catch (e: GitHubFailure) {
         throw e
     } catch (_: GithubAuthenticationException) {
-        throw GitHubFailure("GitHub 身份验证失败，请在 IDE GitHub 设置中重新登录。")
+        // This SDK exception can represent 401, 402 or 403. Only the failing operation is known.
+        throw GitHubFailure(stage.guidance, authStage = stage)
     } catch (_: GithubRateLimitExceededException) {
         throw GitHubFailure("GitHub 已限制请求频率，请等待配额恢复后再重试。")
     } catch (e: GithubStatusCodeException) {
         val code = e.statusCode
         val unknown = sending && code >= 500
         val message = when (code) {
-            401 -> "身份已过期，请在 IDE GitHub 设置中重新登录。"
-            403, 404 -> "目标不可见或权限不足，请核对账号和仓库。"
+            401, 403 -> stage.guidance
+            404 -> "目标不可见或不存在，请核对账号和仓库。"
             429 -> "GitHub 已限制请求频率，请稍后重试。"
             else -> "GitHub 请求失败（HTTP $code）。"
         }
-        throw GitHubFailure(message, unknown)
+        throw GitHubFailure(message, unknown, if (code == 401 || code == 403) stage else null)
     } catch (_: IOException) {
         throw GitHubFailure(if (sending) "发送回执未知，请先到原 Issue 核对。" else "GitHub 请求失败，请检查网络并重试。", sending)
     }

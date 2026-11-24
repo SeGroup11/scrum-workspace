@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="team.segroup11.review.model.ReportCodecTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T07:36:54.577Z" hostname="HUAWEI" time="0.018">
+  <properties/>
+  <testcase name="invalidReportsAreRejectedAsAWhole" classname="team.segroup11.review.model.ReportCodecTest" time="0.01"/>
+  <testcase name="hashUsesLengthPrefixedUtf8AndNormalizedLineEndings" classname="team.segroup11.review.model.ReportCodecTest" time="0.001"/>
+  <testcase name="csvFeatureRetainsEvidenceAndActionableQuestionInRegistryOrder" classname="team.segroup11.review.model.ReportCodecTest" time="0.001"/>
+  <testcase name="credentialKeysCanonicalizeOnlyTheChosenEndpoint" classname="team.segroup11.review.model.ReportCodecTest" time="0.001"/>
+  <testcase name="otherKindsAndEmptyBody" classname="team.segroup11.review.model.ReportCodecTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

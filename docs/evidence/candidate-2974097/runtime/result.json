@@ -1,0 +1,29 @@
+{
+  "candidate": "github-issue-review-0.2.0.zip",
+  "sha256": "e0b10cede8dc310990fc1dad747cf46a9c6319a4cb1c89db9e40156cc394a0d3",
+  "coverage": "Headless IDE, packaged SDK, loopback model",
+  "results": [
+    {
+      "build": "IU-262.10315.125",
+      "passed": true,
+      "requests": 2,
+      "evidence": "IU-262.10315.125/result.txt"
+    },
+    {
+      "build": "WS-262.10315.144",
+      "passed": false,
+      "error": "No valid license found in the test profile; the IDE exited before running the observer."
+    },
+    {
+      "build": "RD-262.9437.287",
+      "passed": false,
+      "error": "No valid license found in the test profile; the IDE exited before running the observer."
+    },
+    {
+      "build": "PY-262.9437.214",
+      "passed": true,
+      "requests": 2,
+      "evidence": "PY-262.9437.214/result.txt"
+    }
+  ]
+}

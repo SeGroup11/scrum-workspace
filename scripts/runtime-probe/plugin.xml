@@ -1,0 +1,11 @@
+<idea-plugin>
+    <id>team.segroup11.testprobe</id>
+    <name>Group 11 Runtime Probe</name>
+    <vendor>CS5351 Group 11</vendor>
+    <version>1</version>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>team.segroup11.issue-review</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <appStarter id="group11RuntimeProbe" implementation="fixture.Probe"/>
+    </extensions>
+</idea-plugin>

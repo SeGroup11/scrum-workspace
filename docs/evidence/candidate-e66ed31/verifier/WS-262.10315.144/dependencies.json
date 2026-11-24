@@ -1,0 +1,11 @@
+{
+  "build": "WS-262.10315.144",
+  "source": "WS-262.10315.144/plugins/team.segroup11.issue-review/0.2.1/dependencies.txt",
+  "sourceSha256": "b470ab51275ef2c1f826c448145364b525f6a68681cbf84a7683fc88cab6073d",
+  "dependencyIdentifiers": [
+    "com.intellij:262.10315.144/intellij.platform.tasks",
+    "com.intellij.tasks:262.10315.144",
+    "Git4Idea:262.10315.144",
+    "org.jetbrains.plugins.github:262.10315.144"
+  ]
+}

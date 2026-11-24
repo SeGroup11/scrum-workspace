@@ -1,0 +1,20 @@
+{
+  "observedUtc": "2026-11-24T09:24:33.8949356+00:00",
+  "source": "3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835",
+  "issues": [
+    {
+      "number": 16,
+      "title": "导出文件为空",
+      "count": 2,
+      "url": "https://github.com/SeGroup11/scrum-workspace/issues/16",
+      "updatedAt": "2026-11-24T09:09:55Z"
+    },
+    {
+      "number": 17,
+      "title": "导出搜索结果",
+      "count": 3,
+      "url": "https://github.com/SeGroup11/scrum-workspace/issues/17",
+      "updatedAt": "2026-11-24T09:16:29Z"
+    }
+  ]
+}

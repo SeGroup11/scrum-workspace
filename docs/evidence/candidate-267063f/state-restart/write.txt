@@ -1,0 +1,6 @@
+process=2872 phase=write project=QA-Project
+registered Tasks extension=team.segroup11.review.state.ReviewContextProvider
+nativeProjectClose=true
+modelChatRequests=1
+GitHub GET/POST uninstrumented; this project has no GitHub account or remote.
+PASS

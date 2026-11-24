@@ -1,0 +1,8 @@
+2026-11-24 17:37:24,538 [ 197060]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=11
+2026-11-24 17:37:35,375 [ 207897]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10843
+2026-11-24 17:52:10,154 [ 796731]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=25
+2026-11-24 17:52:20,928 [ 807505]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10792
+2026-11-24 17:52:45,177 [ 831754]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=63
+2026-11-24 17:52:55,159 [ 841736]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10042
+2026-11-24 17:53:24,400 [ 870977]   INFO - #team.segroup11.review.ReviewEditor - IssueReview first paint elapsed_ms=7
+2026-11-24 17:53:34,409 [ 880986]   INFO - #team.segroup11.review.state.ReviewStore - IssueReview analysis completed elapsed_ms=10014

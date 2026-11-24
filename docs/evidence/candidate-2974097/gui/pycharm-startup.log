@@ -1,0 +1,3 @@
+2026-11-24 15:18:19,440 [     29]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 15:18:20,006 [    595]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.0)
+2026-11-24 15:18:29,908 [  10497]   INFO - #c.i.i.i.ProjectUtil - Opening existing project with .idea at C:\Users\33583\Documents\Code\CS5487GroupProject\build\evidence\candidate-2974097\pycharm-gui\Group11-Candidate-PyCharm

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration version="2.0" label="Issue Review gateway calls" description="Only Issue Review detail, connect, comment, and evaluate methods. No arguments, stacks or credentials." provider="CS5351 Group 11">
+  <event name="jdk.MethodTrace">
+    <setting name="enabled">true</setting>
+    <setting name="filter">team.segroup11.review.github.GitHubGateway::connect;team.segroup11.review.github.GitHubGateway::detail;team.segroup11.review.github.GitHubGateway::postComment;team.segroup11.review.model.ModelGateway::evaluate</setting>
+    <setting name="threshold">0 ns</setting>
+    <setting name="stackTrace">false</setting>
+  </event>
+</configuration>

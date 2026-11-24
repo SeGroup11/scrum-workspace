@@ -1,0 +1,26 @@
+{
+  "stage": "after-comment-before-body",
+  "observedUtc": "2026-11-24T09:08:47.6537048Z",
+  "sourceUtc": "2026-11-24T09:08:20.2923512Z",
+  "view": "<view account=\"github.com:78433511\" repo=\"github.com/segroup11/scrum-workspace\" number=\"16\" tab=\"0\" />",
+  "taskLocators": [
+    "<task account=\"github.com:78433511\" repo=\"github.com/segroup11/scrum-workspace\" number=\"16\" tab=\"0\" id=\"github.com/segroup11/scrum-workspace#16\" />",
+    "<task account=\"github.com:78433511\" repo=\"github.com/segroup11/scrum-workspace\" number=\"17\" tab=\"1\" id=\"github.com/segroup11/scrum-workspace#17\" />",
+    "<task account=\"github.com:78433511\" repo=\"github.com/segroup11/scrum-workspace\" number=\"20\" tab=\"0\" id=\"github.com/segroup11/scrum-workspace#20\" />"
+  ],
+  "nativeActive": [
+    "github.com/segroup11/scrum-workspace#20"
+  ],
+  "a": {
+    "revision": "15",
+    "request": "ce24ab60-0102-44e1-b833-ab252a3d02dd",
+    "at": "1795510996403",
+    "hash": "1d747a69ce31dd44f21f0c358ba04127e74fcf49d05e62d46c4840a5492471e3",
+    "model": "slow-success",
+    "draft": "0.2.3 后续草稿：核验返回的 CSV 行数。\n\n末字乙  "
+  },
+  "b": {
+    "revision": "7",
+    "draft": "B 独立草稿：A 正在运行 0.2.3 慢分析，末字乙。"
+  }
+}
