@@ -2,6 +2,8 @@
 
 CS5351 Group 11 的 JetBrains 插件。打开项目中的 **Issue Review** 窗口，选定 GitHub 仓库和 IDE 账号，即可浏览 Issue，在原文旁查看六项质量检查，并把改写后的建议作为评论发回当前 Issue。
 
+当前候选为 **0.2.3**。在私有发布列表中选 `v0.2.3-rc.1`，下载 `github-issue-review-0.2.3.zip`。安装包共 75,393,438 字节，SHA-256 为 `d0e5c1af07918baa377a0a81151dabaace0ade7f5d7c5617a4b447315a24000f`。[发布列表](https://github.com/SeGroup11/scrum-workspace/releases) · [锁定源码](https://github.com/SeGroup11/scrum-workspace/commit/3f9c974b84a716ffbf8aa6c04d732601c0e3b4e0) · [逐项验收矩阵](docs/evidence/acceptance.md)
+
 ## 安装与使用
 
 1. 在目标 IDE 的 **Settings → Plugins → Install Plugin from Disk** 选择小组候选 ZIP。加载后打开该仓库的 Git 项目和 **View → Tool Windows → Issue Review**。

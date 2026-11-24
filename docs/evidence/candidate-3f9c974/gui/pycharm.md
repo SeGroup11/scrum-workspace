@@ -1,0 +1,13 @@
+# PyCharm 0.2.3 实机验收
+
+2026-11-24 在 PyCharm PY-262.9437.214 的受信任项目中，从磁盘安装候选 `3f9c974b84a716ffbf8aa6c04d732601c0e3b4e0`，使用私仓账号 material4002。安装包 SHA-256 为 `d0e5c1af07918baa377a0a81151dabaace0ade7f5d7c5617a4b447315a24000f`。重启后，IDE 日志列出了插件 0.2.3。已安装的主 JAR 与候选 ZIP 中对应条目的 SHA-256 一致。[安装完成与重启](pycharm-live/2026-11-24T08-55-40-387Z-installed-restart.jpg) · [启动日志](pycharm-startup.log) · [安装摘要](pycharm-jars.json)
+
+| 用例 | 实际结果 |
+| --- | --- |
+| 冷启动恢复仓库 | 重启后第一次查看窗口，仓库已自动恢复到目标 origin，账号为 material4002，列表有 19 张 Issue。原生顶栏和插件均恢复到 #17，选中报告页，B 的旧草稿仍在。期间没有点击“连接”或“重新检测”。[首次观察](pycharm-live/2026-11-24T08-59-23-039Z-automatic-startup-before-any-controls.jpg) |
+| 首次绑定原生任务 | 打开此前没有原生任务快照的 #20，只点一次“设为当前 IDE 任务”。右侧持续显示 #20 正文，原生 Tasks 顶部异步从 #17 更新为 #20。在该 Issue 上未编辑或发送任何内容。[激活前正文](pycharm-live/2026-11-24T09-02-12-366Z-fresh-20-loaded-before-binding.jpg) · [原生标题与右侧详情稳定一致](pycharm-live/2026-11-24T09-02-38-990Z-fresh-20-stable-title-and-detail.jpg) · [独立原生 Tasks 首次和恢复回归](../task-activation/README.md) |
+| A 在途分析与 B 独立编辑 | A #16 显示真实作者、时间、长正文和 1 条评论。点击“分析”，再次点击禁用的按钮，滚动 A、编辑 A 草稿，再切到 B #17 改写 B 的草稿。A 的请求完成时窗口仍显示 B，B 未收到 A 的报告。切回 A 可见报告以及等待中编辑的末字甲。生产代码记录按钮首帧 6 ms，分析完成 10,485 ms；回环服务仅记录一次 slow-success，耗时 10,000 ms。[A 初始状态](pycharm-live/2026-11-24T09-02-55-866Z-a-before-slow-success-count.jpg) · [滚动中](pycharm-live/2026-11-24T09-03-07-161Z-a-scroll-during-analysis.jpg) · [B 编辑中](pycharm-live/2026-11-24T09-03-10-480Z-b-edited-while-a-in-flight.jpg) · [A 完成后仍在 B](pycharm-live/2026-11-24T09-03-30-979Z-b-remains-after-a-result.jpg) · [IDE 计时](pycharm-live/production-timings.log) · [模型请求](pycharm-live/loopback-calls.log) |
+| 人工采纳与发送 | 在 A 报告选中“复现步骤”，点击“用于回复”，按 Tab 采纳，再改成组员自己的完整评论。核对目标后只点一次“发送评论”。“正在发送…”期间将编辑器改为后续草稿。回执返回后新草稿和空行仍在。[预览](pycharm-live/2026-11-24T09-03-40-263Z-suggestion-preview.jpg) · [Tab 采纳](pycharm-live/2026-11-24T09-03-40-650Z-suggestion-accepted-with-tab.jpg) · [发送前人工改写](pycharm-live/2026-11-24T09-03-50-087Z-final-rewrite-before-explicit-send.jpg) · [在途新编辑](pycharm-live/2026-11-24T09-04-01-943Z-edited-before-send-returned.jpg) |
+| 远端确认与只加评论的报告状态 | PyCharm 重新读取讨论，显示 2 条评论，最新作者 material4002、回执 7126914405 与输入文字一致。独立 GitHub 检查确认 #16 从 1 变为 2，#17 当时仍为 1。只加评论后点“刷新详情”，A 报告仍显示“缺陷报告 · slow-success”，没有旧版本提示。[发评前报告](pycharm-live/2026-11-24T09-03-39-284Z-a-current-report-before-comment.jpg) · [发评后刷新报告](pycharm-live/2026-11-24T09-04-41-015Z-comment-only-refresh-report-current.jpg) · [IDE 重读评论与新草稿](pycharm-live/2026-11-24T09-04-56-959Z-discussion-refetched-count-body-and-receipt.jpg) · [真实评论](https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126914405) |
+
+所有截图均来自本次授权测试项目窗口，文件名使用 UTC 采集时间。受控服务仅在本机回环地址提供模型响应；私仓正文、评论和远端回执由实际 GitHub 账号读取。独立双进程的精确草稿、主动清空、旧 Tasks 定位及恢复流量详见[状态重启证据](../state-restart/README.md)。

@@ -33,7 +33,7 @@
 
 ## 0.2.1 主账号实测与修复
 
-在故事 1.2 的 WebStorm 私仓实测中，旧包在主账号重新登录后仍给出笼统的身份验证失败提示。新包为所选账号增加原生重新认证入口，并区分身份验证、仓库读取及后续操作的失败。QA 复跑 21 个独立测试，记录了账号阶段错误、取消重认证和确认重认证的结果。[故事 #5](https://github.com/SeGroup11/scrum-workspace/issues/5) · [候选 e66ed31](https://github.com/SeGroup11/scrum-workspace/commit/e66ed311cf986d876814f7737f897b526322236a) · [QA Check](https://github.com/SeGroup11/scrum-workspace/runs/138292777291) · [0.2.1 验收矩阵](acceptance.md) · [0.2.0 历史矩阵](acceptance-0.2.0.md)
+在故事 1.2 的 WebStorm 私仓实测中，旧包在主账号重新登录后仍给出笼统的身份验证失败提示。新包为所选账号增加原生重新认证入口，并区分身份验证、仓库读取及后续操作的失败。QA 复跑 21 个独立测试，记录了账号阶段错误、取消重认证和确认重认证的结果。[故事 #5](https://github.com/SeGroup11/scrum-workspace/issues/5) · [候选 e66ed31](https://github.com/SeGroup11/scrum-workspace/commit/e66ed311cf986d876814f7737f897b526322236a) · [QA Check](https://github.com/SeGroup11/scrum-workspace/runs/138292777291) · [0.2.1 验收矩阵](acceptance-0.2.1.md) · [0.2.0 历史矩阵](acceptance-0.2.0.md)
 
 看板有三个 Sprint，每个 Sprint 四张故事。各卡的实际状态可按序号回读。0.2.1 的锁定产物、课程材料及测试范围汇在新的发布草稿。[看板快照](candidate-e66ed31/github/project.json) · [S1 修复评审](https://github.com/SeGroup11/scrum-workspace/pull/18#pullrequestreview-6035485040) · [S3 候选评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6035485566) · [发布列表中的 v0.2.1-rc.1 草稿（ID 456437638）](https://github.com/SeGroup11/scrum-workspace/releases)
 
@@ -44,3 +44,11 @@
 组织授权后，WebStorm 和 PyCharm 都读到了私仓 A/B 的原文。WebStorm 使用 material4002 对 #17 发送一次，独立 QA 验证评论 ID 7125780145、逐字正文和 0→1；#16 仍为 0。0.2.1 把评论作者及日期显示为未知，讨论区仍显示 0 条。旧安装包的独立类加载器复现了字段丢失。同一候选的 PyCharm 对 10 秒成功、503、重试分别测得首帧 6/5/19 ms。[评论与回执](candidate-e66ed31/github/webstorm-receipt.json) · [缺陷 Check](https://github.com/SeGroup11/scrum-workspace/runs/138308671600) · [真实首帧与交互](https://github.com/SeGroup11/scrum-workspace/runs/138309854800)
 
 故事 1.3 和 2.4 的修复将作者与时间改为直接映射 API 字段，并让界面从当前去重后的评论集合计算条数。新候选源码为 267063f。新包从干净归档执行 23 项回归，双类加载器读取了实际作者和日期，四个精确构建均为 Compatible。故事 1.1 的首轮可安装、可读私仓路径已按原条件关闭，其余卡按各自验收条件追踪。[23 项 Check](https://github.com/SeGroup11/scrum-workspace/runs/138315005604) · [0.2.2 评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6035965374) · [看板快照](candidate-267063f/github/project.json) · [最新验收矩阵](acceptance.md)。[真实字段输入](candidate-e66ed31/github/field-regression-input.json) · [修复提交](https://github.com/SeGroup11/scrum-workspace/commit/267063f8d7fc2d321f03d386b2ce9c64553c916c) · [0.2.1 验收矩阵](acceptance-0.2.1.md)
+
+## 0.2.3 冷启动回归与复核
+
+0.2.2 的原生 Tasks 首次绑定 A 和 B 都会清掉右侧详情；同版的两个正常启动进程还曾在 Git 就绪前完成仓库扫描，需要手动重新检测。0.2.3 在首次任务切换时保留目标定位，并在 Git 发布仓库映射时重新尝试发现。使用相同观察器，0.2.2 的两次首次绑定失败，0.2.3 的首次 A、首次 B、切回 A、切回 B 四次均通过。PyCharm 的正常用户配置还复测了冷启动自动恢复私仓、账号和 #17，在此前从未绑定的私仓 #20 上验证原生任务标题与插件详情稳定一致。[修复提交](https://github.com/SeGroup11/scrum-workspace/commit/3f9c974b84a716ffbf8aa6c04d732601c0e3b4e0) · [0.2.2 原始失败](candidate-267063f/task-activation/result.txt) · [0.2.3 原生复测](candidate-3f9c974/task-activation/result.txt) · [真实 PyCharm](candidate-3f9c974/gui/pycharm.md) · [回顾行动 #23](https://github.com/SeGroup11/scrum-workspace/issues/23)
+
+最终安装包为 `github-issue-review-0.2.3.zip`，SHA-256 `d0e5c1af07918baa377a0a81151dabaace0ade7f5d7c5617a4b447315a24000f`。26 项自动测试通过，Gradle verifyPlugin 与独立 Verifier 在四款精确 build 上均报告 Compatible。真实两进程启动和关闭保留了逐字符草稿和报告身份；模型在重开时收到零次请求。两个项目的设置和按地址隔离的凭据也通过原生服务复测。[逐项矩阵](acceptance.md) · [实现评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6036360001) · [构建和自动测试](https://github.com/SeGroup11/scrum-workspace/runs/138328199869) · [四款兼容性](https://github.com/SeGroup11/scrum-workspace/runs/138332736163) · [Tasks 和重启](https://github.com/SeGroup11/scrum-workspace/runs/138332764452) · [设置与 PasswordSafe](https://github.com/SeGroup11/scrum-workspace/runs/138332795842)
+
+真实桌面发送通过账号 material4002 操作，GitHub 的独立 GET 记录编号、原文、作者及当时 A/B 条数。模型测试使用本机可回放服务。R1 的两份响应均满足协议，但固定响应错误地将 A 的两步复现判为缺失，各例保留原始输入和模型 JSON。[远端回执](candidate-3f9c974/github) · [语义回放与结果](candidate-3f9c974/model) · [课程报告](../course/report.zh-CN.md) · [可下载的私仓发布草稿](https://github.com/SeGroup11/scrum-workspace/releases)

@@ -54,7 +54,11 @@ public final class TaskProbe implements ApplicationStarter {
             trace.add(phase + " called ReviewStore.activateTask(Task, ViewPointer)");
         } catch (NoSuchMethodException legacy) {
             // 0.2.2's production button performs these two public calls inline.
-            store.bindTask(task.getId(), ref);
+            try {
+                store.getClass().getMethod("bindTask", String.class, ViewPointer.class).invoke(store, task.getId(), ref);
+            } catch (ReflectiveOperationException failure) {
+                throw new IllegalStateException("Legacy task binding failed", failure);
+            }
             manager.activateTask(task, true);
             trace.add(phase + " called 0.2.2 native binding sequence");
         } catch (ReflectiveOperationException failure) {
