@@ -1,0 +1,13 @@
+<idea-plugin>
+    <id>team.segroup11.issue-review</id>
+    <name>GitHub Issue 质量评审</name>
+    <vendor>CS5351 Group 11</vendor>
+    <description>Browse issues using your IDE GitHub account and review the original text in a project tool window.</description>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.tasks</depends>
+    <depends>Git4Idea</depends>
+    <depends>org.jetbrains.plugins.github</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Issue Review" anchor="bottom" factoryClass="team.segroup11.review.ReviewWindowFactory"/>
+    </extensions>
+</idea-plugin>
