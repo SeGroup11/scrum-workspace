@@ -1,0 +1,23 @@
+{
+  "candidate": "e66ed311cf986d876814f7737f897b526322236a",
+  "observedUtc": "2026-11-24T07:32:56.7216440+00:00",
+  "scope": "Read-only QA snapshot prior to testing explicit sends from IDE",
+  "issues": [
+    {
+      "comments": 0,
+      "html_url": "https://github.com/SeGroup11/scrum-workspace/issues/16",
+      "number": 16,
+      "state": "open",
+      "title": "导出文件为空",
+      "updated_at": "2026-11-24T06:11:32Z"
+    },
+    {
+      "comments": 0,
+      "html_url": "https://github.com/SeGroup11/scrum-workspace/issues/17",
+      "number": 17,
+      "state": "open",
+      "title": "导出搜索结果",
+      "updated_at": "2026-11-24T06:11:34Z"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "product": "webstorm",
+  "pid": 28680,
+  "processStartUtc": "2026-11-24T09:59:03.0338368Z",
+  "observedUtc": "2026-11-24T10:00:58.5796051+00:00",
+  "recordingSha256": "61bba53bcc48203f7cc3ef59dd40d913a527e258e9618c561896ca85903667c2",
+  "counts": {
+    "connect": 1,
+    "detail": 2,
+    "postComment": 0,
+    "evaluate": 0
+  },
+  "methods": [
+    {
+      "at": "2026-11-24T17:59:13.188646800+08:00",
+      "method": "connect",
+      "class": "team/segroup11/review/github/GitHubGateway"
+    },
+    {
+      "at": "2026-11-24T17:59:15.674774400+08:00",
+      "method": "detail",
+      "class": "team/segroup11/review/github/GitHubGateway"
+    },
+    {
+      "at": "2026-11-24T18:00:08.081299600+08:00",
+      "method": "detail",
+      "class": "team/segroup11/review/github/GitHubGateway"
+    }
+  ]
+}

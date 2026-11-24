@@ -1,0 +1,17 @@
+[
+  {
+    "at": "2026-11-24T17:52:49.098165200+08:00",
+    "method": "detail",
+    "class": "team/segroup11/review/github/GitHubGateway"
+  },
+  {
+    "at": "2026-11-24T17:53:14.328591900+08:00",
+    "method": "detail",
+    "class": "team/segroup11/review/github/GitHubGateway"
+  },
+  {
+    "at": "2026-11-24T17:53:24.394954+08:00",
+    "method": "evaluate",
+    "class": "team/segroup11/review/model/ModelGateway"
+  }
+]

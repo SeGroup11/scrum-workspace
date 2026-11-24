@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="team.segroup11.review.github.GitHubGatewayTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-24T09:30:04.296Z" hostname="HUAWEI" time="0.97">
+  <properties/>
+  <testcase name="emptyBodyAndPartialCommentFailureI2" classname="team.segroup11.review.github.GitHubGatewayTest" time="0.88"/>
+  <testcase name="preserveActualIssueAndCommentAuthorsAndTimestamps" classname="team.segroup11.review.github.GitHubGatewayTest" time="0.018"/>
+  <testcase name="reverifyBeforePostAndNoAutomaticRetryC2" classname="team.segroup11.review.github.GitHubGatewayTest" time="0.019"/>
+  <testcase name="remoteAndAccountIsolationG1" classname="team.segroup11.review.github.GitHubGatewayTest" time="0.027"/>
+  <testcase name="prOnlyPageThenIssueAndNoCommentGetsI1" classname="team.segroup11.review.github.GitHubGatewayTest" time="0.009"/>
+  <testcase name="distinguishIdentityAndRepositoryAndReauthenticateSelectedAccountG1" classname="team.segroup11.review.github.GitHubGatewayTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

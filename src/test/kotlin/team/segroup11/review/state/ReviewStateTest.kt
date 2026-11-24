@@ -29,6 +29,23 @@ class ReviewStateTest {
         return ReviewArchive(SAXBuilder().build(StringReader(serialized)).rootElement).load()
     }
 
+    @Test fun nativeContextClearPreservesOnlyTheExplicitIncomingTaskOnce() {
+        val data = ReviewData()
+        data.select(a)
+        data.edit(a, "最后一字  ")
+        data.beginTaskActivation("task-A", a, "Default")
+        assertEquals(a, data.tasks["task-A"])
+        assertTrue(data.consumeActivationClear("task-A"))
+        assertEquals(a, data.lastView)
+        assertEquals("最后一字  ", data.snapshot(a).draftText)
+        assertFalse(data.consumeActivationClear("task-A"))
+        data.beginTaskActivation("task-A", a, "task-A")
+        assertFalse(data.consumeActivationClear("task-A"))
+        data.beginTaskActivation("task-B", b, "task-A")
+        assertFalse(data.consumeActivationClear("unrelated"))
+        assertFalse(data.consumeActivationClear("task-B"))
+    }
+
     @Test fun roundTripPreservesEveryDraftAndOnlyStoresContextLocators() {
         val data = ReviewData()
         val otherRepo = a.copy(repoCanonical = "github.com/other/exporter")

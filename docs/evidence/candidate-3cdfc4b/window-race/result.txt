@@ -1,0 +1,51 @@
+observed blank isolated IDE discovered no remote
+observed two repository choices
+GET one /user?
+GET one /repos/qa/alpha?
+GET one /repos/qa/alpha/issues?state=all&per_page=50&page=1
+GET one /repos/qa/alpha/issues?state=all&per_page=50&page=2
+observed A PR-only page advances to #16
+GET one /repos/qa/alpha/issues/16?
+GET one /repos/qa/alpha/issues/16/comments?per_page=50&page=1
+A blocked connection=Alpha · one; title=#16  alpha-16; target=回复至 qa/alpha #16; draft=; pending=null; latest=ViewPointer(accountKey=github.com:101, repoCanonical=github.com/qa/alpha, number=16, tab=0)
+GET two /user?
+GET two /repos/qa/beta?
+GET two /repos/qa/beta/issues?state=all&per_page=50&page=1
+GET two /repos/qa/beta/issues?state=all&per_page=50&page=2
+observed B PR-only page advances to #17
+B connected before explicit selection connection=要恢复此任务，请先选择对应的仓库和账号; title=请选择 Issue; target=请选择 Issue; draft=; pending=ViewPointer(accountKey=github.com:101, repoCanonical=github.com/qa/alpha, number=16, tab=0); latest=ViewPointer(accountKey=github.com:101, repoCanonical=github.com/qa/alpha, number=16, tab=0)
+GET two /repos/qa/beta/issues/17?
+GET two /repos/qa/beta/issues/17/comments?per_page=50&page=1
+observed B detail and comment completed while A is blocked
+B manually selected connection=Beta · two; title=qa/beta  #17  beta-17  ·  打开; target=回复至 qa/beta #17; draft=Beta draft 17; pending=null; latest=ViewPointer(accountKey=github.com:202, repoCanonical=github.com/qa/beta, number=17, tab=0)
+delayed A decoded /repos/qa/alpha/issues/16/comments
+delayed A decoded /repos/qa/alpha/issues/16
+observed A returned; B title, body, author comment and count still intact
+A settled after B connection=Beta · two; title=qa/beta  #17  beta-17  ·  打开; target=回复至 qa/beta #17; draft=Beta draft 17; pending=null; latest=ViewPointer(accountKey=github.com:202, repoCanonical=github.com/qa/beta, number=17, tab=0)
+GET two /repos/qa/beta/issues?state=closed&per_page=50&page=1
+GET two /repos/qa/beta/issues?state=closed&per_page=50&page=2
+observed closed filter follows PR-only page
+observed exact number #4 does not match #17
+observed exact number #17 matches
+GET two /user?
+GET two /repos/qa/beta?
+GET two /repos/qa/beta/issues?state=closed&per_page=50&page=1
+GET two /repos/qa/beta/issues/17?
+GET two /repos/qa/beta/issues/17/comments?per_page=50&page=1
+GET two /repos/qa/beta/issues?state=closed&per_page=50&page=2
+observed rediscovery connected saved account two and loaded Beta list
+after explicit rediscovery connection=Beta · two; title=qa/beta  #17  beta-17  ·  打开; target=回复至 qa/beta #17; draft=Beta draft 17; pending=null; latest=ViewPointer(accountKey=github.com:202, repoCanonical=github.com/qa/beta, number=17, tab=0)
+same-window selected B survived rediscovery=true
+observed blank isolated IDE discovered no remote
+GET two /user?
+GET two /repos/qa/beta?
+GET two /repos/qa/beta/issues?state=all&per_page=50&page=1
+GET two /repos/qa/beta/issues/17?
+GET two /repos/qa/beta/issues/17/comments?per_page=50&page=1
+GET two /repos/qa/beta/issues?state=all&per_page=50&page=2
+observed closed project reopened and remembered account, repo, Issue B, latest draft
+after normal project close and reopen connection=Beta · two; title=qa/beta  #17  beta-17  ·  打开; target=回复至 qa/beta #17; draft=Beta draft 17; pending=null; latest=ViewPointer(accountKey=github.com:202, repoCanonical=github.com/qa/beta, number=17, tab=0)
+GET two /repos/qa/beta/issues?state=open&per_page=50&page=1
+GET two /repos/qa/beta/issues?state=open&per_page=50&page=2
+observed open filter requests state=open and displays open #17 after PR-only page
+PASS

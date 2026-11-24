@@ -1,0 +1,9 @@
+{
+  "commentCount": 2,
+  "readbackUtc": "2026-11-24T09:09:57.3809365+00:00",
+  "phase": "restore",
+  "confirmedSha256": "a7e17d6b70bf3e4b3664e937639f92c9aebe660468cf8449d926cd70f7ca180a",
+  "issue": 16,
+  "update": "2026-11-24T09:09:55Z",
+  "beforeSha256": "87d3b0daba32b146b2093cc2f2ae7f57d1356f5a0ffb7dd6b5d54122584784e6"
+}

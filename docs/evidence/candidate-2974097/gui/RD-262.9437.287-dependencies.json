@@ -1,0 +1,11 @@
+{
+  "build": "RD-262.9437.287",
+  "verifier": "1.411",
+  "source": "RD-262.9437.287/plugins/team.segroup11.issue-review/0.2.0/dependencies.txt",
+  "sourceSha256": "e4b9f7a76cf2cc09a9d9a4fe022630f26b111143d47717499178087b37828118",
+  "dependencyIdentifiers": [
+    "com.intellij:262.9437.287/intellij.platform.tasks",
+    "Git4Idea:262.9437.287",
+    "org.jetbrains.plugins.github:262.9437.287"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "version": "0.2.3",
+  "archive": "github-issue-review-0.2.3.zip",
+  "zipSha256": "d0e5c1af07918baa377a0a81151dabaace0ade7f5d7c5617a4b447315a24000f",
+  "mainJarFromZip": "076B02DBDC9AD232B5E37CE2E18BC77FE336D9D49C2508774D6B5A29A7436830",
+  "mainJarFromInstalledGUI": "076B02DBDC9AD232B5E37CE2E18BC77FE336D9D49C2508774D6B5A29A7436830",
+  "equal": true
+}

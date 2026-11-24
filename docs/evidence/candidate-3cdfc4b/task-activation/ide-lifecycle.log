@@ -1,0 +1,5 @@
+2026-11-24 17:32:34,977 [      7]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE STARTED ------------------------------------------------------
+2026-11-24 17:32:35,029 [     59]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 17:32:36,197 [   1227]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.4), Group 11 native Tasks probe (1)
+2026-11-24 17:32:48,233 [  13263]   INFO - #c.i.u.i.UnindexedFilesScanner - [d44054bc] Started scanning for indexing of [Task-QA]. Reason: On project open
+2026-11-24 17:33:02,996 [  28026]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------

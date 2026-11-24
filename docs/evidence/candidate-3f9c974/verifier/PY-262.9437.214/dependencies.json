@@ -1,0 +1,11 @@
+{
+  "build": "PY-262.9437.214",
+  "source": "PY-262.9437.214/plugins/team.segroup11.issue-review/0.2.3/dependencies.txt",
+  "sourceSha256": "38c7e74471d248d4773eda9d97d2df2f60f014531929a2a17a288ab4a8139ad5",
+  "dependencyIdentifiers": [
+    "com.intellij:262.9437.214/intellij.platform.tasks",
+    "com.intellij.tasks:262.9437.214",
+    "Git4Idea:262.9437.214",
+    "org.jetbrains.plugins.github:262.9437.214"
+  ]
+}

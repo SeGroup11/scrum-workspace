@@ -1,0 +1,14 @@
+# PyCharm 0.2.2 实机
+
+2026-11-24，在 PyCharm PY-262.9437.214 同一受信任项目、同一 IDE 账号与同一配置中，从磁盘升级候选 `267063f8d7fc2d321f03d386b2ce9c64553c916c`，ZIP SHA-256 为 `b2eed1cd59d1f9f6f2231c55bb6c0d97ab82c5a6da27963c2a934053739bedf0`。IDE 提示未知 Git4Idea/GitHub 依赖；点 OK 后明确提示已安装并要求重启。重启后日志列出 0.2.2，安装主 JAR 与 ZIP 条目字节摘要相同。[磁盘提示](pycharm-install-notice.jpg) · [安装确认](pycharm-install-restart.jpg) · [启动日志](pycharm-startup.log) · [双重 SHA-256](pycharm-jars.json)
+
+| 用例 | 实际结果 |
+| --- | --- |
+| 私仓列表、详情与作者时间 | 重启后点击“重新检测”，插件恢复目标 origin、主账号、18 张私仓 Issue、A 之前的报告页及草稿。A 的讨论现在显示真实作者 segroup11-backlog[bot] 和创建时间，B 的既有评论可显示实际用户名。[恢复图](pycharm-live/2026-11-24T08-31-27-652Z-restart-restores-a-draft-report-tab.jpg) · [A 正文作者与时间](pycharm-live/2026-11-24T08-31-46-774Z-a-author-date-before-send.jpg) · [B 正文与真实评论](pycharm-live/2026-11-24T08-34-24-673Z-b-actual-author-comment-and-draft.jpg) |
+| 在途分析 | 在真实 A #16 点击“分析”，等待中重按灰色按钮、滚动 A 长正文、修改 A 草稿，再切至真实 B #17 并改写独立草稿。真实生产按钮 paintComponent 记录 9 ms，IDE 模型工作耗时 10,622 ms，回环服务单请求耗时 10,000 ms。A 的在途编辑仍在，B 没有 A 的报告。本轮模型为 slow-success。[按钮与耗时](pycharm-live/production-timings.log) · [服务计数](pycharm-live/loopback-calls.log) · [真实滚动](pycharm-live/2026-11-24T08-31-48-250Z-success-scroll.jpg) · [B 编辑后的窗口](pycharm-live/2026-11-24T08-31-52-884Z-success-wait-1.jpg) |
+| 预览、Tab、人工改写和显式发送 | 选择 A 报告的复现建议，点击“用于回复”，按 Tab，再将内容改写为图中所示最终评论。核对回复目标为 SeGroup11/scrum-workspace #16、发送前 UI 计数为 0。只点击“发送评论”一次。在“正在发送…”仍可见时把编辑器改为独立的后续草稿。回执到达后 UI 显示 1 条评论、评论 ID 7126271956，并保留后续草稿。[建议预览](pycharm-live/2026-11-24T08-32-35-162Z-suggestion-preview.jpg) · [采纳](pycharm-live/2026-11-24T08-32-35-667Z-suggestion-tab.jpg) · [发送前最终文本](pycharm-live/2026-11-24T08-33-01-709Z-before-explicit-send-a.jpg) · [在途新编辑](pycharm-live/2026-11-24T08-33-03-255Z-new-edit-after-send.jpg) · [回执与计数](pycharm-live/2026-11-24T08-33-18-487Z-published-and-pending-edit-retained.jpg) |
+| GitHub 独立读回 | GitHub 远端 ID 为 7126271956，作者 material4002，正文逐字等于发送前记录；#16 由 0 变 1，#17 保持 1。A 后续草稿最后一个字是乙，其后两个空格已在项目工作区中核实。[真实评论](https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126271956) · [独立 QA 读回](../github/pycharm-receipt.json) · [真实工作区组件](pycharm-live/native-workspace-component.xml) |
+| 首次绑定原生任务 | A/B 分别第一次点击“设为当前 IDE 任务”，IDE 顶部已切换到正确任务，原列表行仍高亮，但右侧变成“请选择 Issue”，没有恢复绑定 Issue 的详情和草稿。在 A/B 上均复现。此项失败。[A 首次](pycharm-live/2026-11-24T08-33-47-832Z-first-activation-a.jpg) · [B 首次](pycharm-live/2026-11-24T08-34-32-963Z-first-activation-b.jpg) |
+| 已有任务切回 | 使用 IDE 顶部 Tasks 下拉的 Switch to，B→A 恢复 A 讨论页、发送回执和后续草稿；A→B 恢复 B 报告页及独立草稿。IDE 的 tasks.zip 中两份原生 context XML 分别含账号、仓库、编号和页签；workspace.xml 对应两项草稿修订分别为 9、5。[菜单切回 A](pycharm-live/2026-11-24T08-35-16-475Z-task-menu-restored-a.jpg) · [菜单切回 B](pycharm-live/2026-11-24T08-35-45-829Z-task-menu-restored-b.jpg) · [原生任务定位器](pycharm-live/native-task-snapshots.json) |
+
+照片仅采集本次测试项目窗口，文件名为 UTC 采集时间。升级前的真实慢失败和人工重试记录在[0.2.1 对照组](../../candidate-e66ed31/gui/pycharm-live/README.md)。本次 0.2.2 的跨进程主动清空、逐字符恢复和回环恢复流量另见[平台重启测试](../state-restart)。

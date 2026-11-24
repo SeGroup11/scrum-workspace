@@ -1,5 +1,7 @@
 package team.segroup11.review
 
+import com.intellij.dvcs.repo.VcsRepositoryManager
+import com.intellij.dvcs.repo.VcsRepositoryMappingListener
 import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.Disposable
@@ -13,7 +15,8 @@ import com.intellij.ui.JBSplitter
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.content.ContentFactory
-import com.intellij.tasks.TaskManager
+import git4idea.repo.GitRepository
+import git4idea.repo.GitRepositoryChangeListener
 import kotlinx.coroutines.*
 import team.segroup11.review.github.*
 import team.segroup11.review.model.ReportCodec
@@ -40,6 +43,12 @@ internal fun textArea(rows: Int = 0) = JTextArea(rows, 0).apply {
 internal fun column(vararg items: JComponent) = JPanel().apply {
     layout = BoxLayout(this, BoxLayout.Y_AXIS)
     items.forEach { it.alignmentX = Component.LEFT_ALIGNMENT; add(it) }
+}
+
+internal fun loadedCommentCount(size: Int, nextPage: Int?): String = when {
+    size == 0 && nextPage == 1 -> ""
+    nextPage != null -> "已加载 ${size} 条评论"
+    else -> "${size} 条评论"
 }
 
 @Service(Service.Level.PROJECT)
@@ -72,6 +81,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     private val issues = linkedMapOf<Long, IssueReviewTask>()
     private val title = JLabel("请选择 Issue")
     private val discussion = textArea().apply { isEditable = false }
+    private val commentCount = JLabel()
     private val discussionStatus = JLabel(" ")
     private val moreComments = button("加载评论") { loadComments() }
     private val open = button("GitHub 原文") { detail?.issueUrl?.let { BrowserUtil.browse(it) } }
@@ -85,6 +95,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
 
     private var session: GitHubSession? = null
     private var discovery: Discovery? = null
+    private val discoveryUpdates = RepositoryDiscovery()
     private var replaceOnFirstPage = false
     private var number: Long? = null
     private var detail: IssueReviewTask? = null
@@ -105,9 +116,11 @@ internal class ReviewWindow(private val project: Project) : Disposable {
 
     init {
         panel.border = BorderFactory.createEmptyBorder(5, 6, 5, 6)
-        panel.add(column(line(JLabel("仓库"), repoBox, JLabel("账号"), accountBox,
-            button("连接") { connect() }, button("重新检测") { discover() },
-            button("GitHub 账号") { ShowSettingsUtil.getInstance().showSettingsDialog(project, "GitHub") }), connection), BorderLayout.NORTH)
+        panel.add(column(line(JLabel("仓库"), repoBox, JLabel("账号"), accountBox),
+            line(button("连接") { connect() }, button("重新检测") { discover() },
+                button("重新认证所选账号") { reauthenticate() },
+                button("GitHub 账号") { ShowSettingsUtil.getInstance().showSettingsDialog(project, "GitHub") }),
+            connection), BorderLayout.NORTH)
         val left = JPanel(BorderLayout(3, 3))
         left.add(column(JLabel("搜索 Issue"), query, filter), BorderLayout.NORTH)
         left.add(JBScrollPane(list))
@@ -126,7 +139,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         panelRight.add(column(title, actions), BorderLayout.NORTH)
         val thread = JPanel(BorderLayout())
         thread.add(JBScrollPane(discussion))
-        thread.add(line(discussionStatus, moreComments), BorderLayout.SOUTH)
+        thread.add(line(commentCount, discussionStatus, moreComments), BorderLayout.SOUTH)
         tabs.addTab("讨论", thread)
         tabs.addTab("评估报告", reportPanel)
         panelRight.add(tabs)
@@ -142,14 +155,22 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         actions.add(button("设为当前 IDE 任务") {
             val task = detail ?: return@button
             val p = pointer() ?: return@button
-            store.bindTask(task.id, p)
-            TaskManager.getManager(project).activateTask(task.withComments(comments.values.toList()), true)
+            store.activateTask(task.withComments(comments.values.toList()), p)
         })
         title.putClientProperty("html.disable", true)
         panel.add(JBSplitter(false, 0.29f).apply { firstComponent = left; secondComponent = panelRight })
         repoBox.renderer = labelRenderer { (it as? RepoChoice)?.label ?: "选择仓库" }
         accountBox.renderer = labelRenderer { (it as? AccountChoice)?.login ?: "选择账号" }
-        list.addListSelectionListener { if (!it.valueIsAdjusting && !updating) list.selectedValue?.let { row -> selectIssue(row.numberValue) } }
+        list.addListSelectionListener {
+            if (it.valueIsAdjusting || updating) return@addListSelectionListener
+            val row = list.selectedValue ?: return@addListSelectionListener
+            if (awaitingRestore != null) {
+                // An explicit choice in this connection supersedes the old task's pending locator.
+                awaitingRestore = null
+                showConnectedAccount()
+            }
+            selectIssue(row.numberValue)
+        }
         filter.addActionListener { resetList() }
         query.onChange { searchTimer.restart() }
         repoBox.addActionListener { if (!updating) { invalidateConnection(); updateAccounts() } }
@@ -160,6 +181,9 @@ internal class ReviewWindow(private val project: Project) : Disposable {
                 if (tabs.selectedIndex == 0 && comments.isEmpty()) loadComments()
             }
         }
+        val bus = project.messageBus.connect(this)
+        bus.subscribe(VcsRepositoryManager.VCS_REPOSITORY_MAPPING_UPDATED, VcsRepositoryMappingListener { repositoryChanged() })
+        bus.subscribe(GitRepository.GIT_REPO_CHANGE, GitRepositoryChangeListener { repositoryChanged() })
         discover()
     }
 
@@ -195,11 +219,19 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         selectIssue(null)
     }
 
+    private fun repositoryChanged() {
+        SwingUtilities.invokeLater {
+            if (!disposed && !project.isDisposed && discoveryUpdates.repositoryChanged()) discover()
+        }
+    }
+
     private fun discover() {
         invalidateConnection()
         val e = epoch
+        discoveryUpdates.started()
         background({ gateway.discover() }, { found ->
             if (e != epoch) return@background
+            val retry = discoveryUpdates.finished(found.repositories.isNotEmpty())
             updating = true
             discovery = found
             repoBox.model = DefaultComboBoxModel(found.repositories.toTypedArray())
@@ -213,7 +245,13 @@ internal class ReviewWindow(private val project: Project) : Disposable {
                 else -> "请选择仓库与账号"
             }
             if (repoBox.selectedItem != null && accountBox.selectedItem != null) connect()
-        }, { if (e == epoch) connection.text = it })
+            if (retry) discover()
+        }, {
+            if (e == epoch) {
+                connection.text = it
+                if (discoveryUpdates.finished(discovery?.repositories?.isNotEmpty() == true)) discover()
+            }
+        })
     }
 
     private fun updateAccounts() {
@@ -238,10 +276,29 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             session = result
             props.setValue("issueReview.repo", target.key.canonical)
             props.setValue("issueReview.account", account.id)
-            connection.text = "${target.label} · ${account.login}"
+            showConnectedAccount()
             resetList()
             (awaitingRestore ?: store.lastView)?.let(::restoreView)
         }, { if (e == epoch) connection.text = it })
+    }
+
+    private fun showConnectedAccount() {
+        val target = repoBox.selectedItem as? RepoChoice ?: return
+        val account = accountBox.selectedItem as? AccountChoice ?: return
+        connection.text = "${target.label} · ${account.login}"
+    }
+
+    private fun reauthenticate() {
+        val target = repoBox.selectedItem as? RepoChoice ?: return
+        val account = accountBox.selectedItem as? AccountChoice ?: return
+        invalidateConnection()
+        connection.text = "请在 IDE 的 GitHub 认证窗口确认所选账号"
+        try {
+            if (gateway.reauthenticate(account.id, target.key, panel)) connect()
+            else connection.text = "已取消重新认证"
+        } catch (e: GitHubFailure) {
+            connection.text = e.message
+        }
     }
 
     private fun resetList() {
@@ -292,7 +349,12 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     }
 
     private fun restoreView(p: ViewPointer?) {
-        if (p == null) { awaitingRestore = null; selectIssue(null); return }
+        if (p == null) {
+            awaitingRestore = null
+            selectIssue(null)
+            renderList()
+            return
+        }
         val s = session
         if (s == null || s.accountKey != p.accountKey || s.repo.canonical != p.repoCanonical) {
             awaitingRestore = p
@@ -314,7 +376,9 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         val row = issues[id]
         title.text = row?.let { "#${it.numberValue}  ${it.summary}" } ?: if (id == null) "请选择 Issue" else "#$id"
         discussion.text = if (id == null) "" else "正在加载正文…"
+        commentCount.text = ""
         discussionStatus.text = " "
+        moreComments.isEnabled = id != null
         open.isEnabled = false
         val p = pointer()
         changingTab = true
@@ -356,7 +420,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             comments.clear()
             remote.forEach { comments[it.remoteId] = it }
             nextComments = null
-            discussionStatus.text = "已核对 ${remote.size} 条评论"
+            discussionStatus.text = "已核对"
             renderDiscussion()
             val choices = remote.reversed()
             val chooser = JComboBox(choices.toTypedArray()).apply {
@@ -390,7 +454,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             page.items.forEach { comments[it.remoteId] = it }
             nextComments = page.nextPage
             moreComments.isEnabled = nextComments != null
-            discussionStatus.text = "${comments.size} 条评论"
+            discussionStatus.text = " "
             renderDiscussion()
         }, {
             if (e == selection) { loadingComments = false; moreComments.isEnabled = true; discussionStatus.text = "评论读取失败：$it" }
@@ -398,6 +462,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     }
 
     private fun renderDiscussion() {
+        commentCount.text = loadedCommentCount(comments.size, nextComments)
         val task = detail ?: return
         val caret = discussion.caretPosition
         discussion.text = buildString {

@@ -1,0 +1,19 @@
+{
+  "commit": "3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835",
+  "zip": "github-issue-review-0.2.4.zip",
+  "bytes": 75393535,
+  "zipSha256": "a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709",
+  "jar": "github-issue-review/lib/github-issue-review-0.2.4.jar",
+  "jarSha256": "ca19ab74f491a75237672cb0467b68450870925ee26a4808ec0770adefe76c36",
+  "id": "team.segroup11.issue-review",
+  "name": "GitHub Issue Quality Review",
+  "version": "0.2.4",
+  "sinceBuild": "262.9437",
+  "untilBuild": "262.*",
+  "requiredDependencies": [
+    "com.intellij.modules.platform",
+    "com.intellij.modules.tasks",
+    "Git4Idea",
+    "org.jetbrains.plugins.github"
+  ]
+}

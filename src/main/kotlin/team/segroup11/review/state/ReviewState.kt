@@ -28,6 +28,7 @@ internal class ReviewData {
     val records = mutableMapOf<String, ReviewSnapshot>()
     val tasks = mutableMapOf<String, ViewPointer>()
     var lastView: ViewPointer? = null
+    private var activatingTask: String? = null
     private val analyses = mutableMapOf<String, String>()
     val pending = mutableMapOf<String, PendingSend>()
     val lockedKeys = mutableSetOf<String>()
@@ -42,6 +43,18 @@ internal class ReviewData {
         if (futureVersion) return
         lastView = p
         if (p != null && p.key !in lockedKeys) records[p.key] = snapshot(p).copy(tab = p.tab)
+    }
+
+    fun beginTaskActivation(taskId: String, pointer: ViewPointer, currentTaskId: String) {
+        if (futureVersion) return
+        tasks[taskId] = pointer
+        activatingTask = taskId.takeUnless { it == currentTaskId }
+    }
+
+    fun consumeActivationClear(activeTaskId: String): Boolean {
+        val keepSelection = activatingTask == activeTaskId
+        activatingTask = null
+        return keepSelection
     }
 
     fun edit(p: ViewPointer, text: String) {

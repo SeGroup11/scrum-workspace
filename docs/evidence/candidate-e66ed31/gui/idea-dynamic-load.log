@@ -1,0 +1,3 @@
+2026-11-24 15:58:46,240 [3249915]   INFO - #c.i.i.p.DynamicPlugins - Computing new plugins state with include=[plugin 'GitHub Issue Quality Review' (team.segroup11.issue-review, 0.2.1)], exclude=[], pretendEnabled=[team.segroup11.issue-review]
+2026-11-24 15:59:18,586 [3282261]   INFO - #c.i.i.p.DynamicPlugins - Computing new plugins state with include=[plugin 'GitHub Issue Quality Review' (team.segroup11.issue-review, 0.2.1)], exclude=[]
+- load plugin 'GitHub Issue Quality Review' (team.segroup11.issue-review, 0.2.1)

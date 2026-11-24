@@ -1,0 +1,30 @@
+{
+  "candidate": "github-issue-review-0.2.0.zip",
+  "sha256": "e0b10cede8dc310990fc1dad747cf46a9c6319a4cb1c89db9e40156cc394a0d3",
+  "verifier": "verifier-cli-1.411-all.jar",
+  "verifierSha256": "D6CC1C1F17761BB5EFFF187F98B63FB792C7EF2A2FB9202BB5DBEA05EBC02BFA",
+  "os": "Microsoft Windows NT 10.0.26300.0",
+  "exitCode": 0,
+  "results": [
+    {
+      "build": "IU-262.10315.125",
+      "verdict": "Compatible. 5 usages of deprecated API. 6 usages of experimental API",
+      "compatible": true
+    },
+    {
+      "build": "WS-262.10315.144",
+      "verdict": "Compatible. 5 usages of deprecated API. 6 usages of experimental API",
+      "compatible": true
+    },
+    {
+      "build": "RD-262.9437.287",
+      "verdict": "Compatible. 5 usages of deprecated API. 6 usages of experimental API",
+      "compatible": true
+    },
+    {
+      "build": "PY-262.9437.214",
+      "verdict": "Compatible. 5 usages of deprecated API. 6 usages of experimental API",
+      "compatible": true
+    }
+  ]
+}

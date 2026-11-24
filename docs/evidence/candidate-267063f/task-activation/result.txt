@@ -1,0 +1,38 @@
+fresh noExistingTasks=true
+firstA added(github.com/fixture/task-regression#16) active=Default view=16/tab0
+firstA deactivated(Default) active=github.com/fixture/task-regression#16 view=16/tab0
+firstA activated(github.com/fixture/task-regression#16) active=github.com/fixture/task-regression#16 view=16/tab0
+firstA restore(<empty>) active=github.com/fixture/task-regression#16 view=<empty>
+firstA called 0.2.2 native binding sequence
+firstA settled active=github.com/fixture/task-regression#16 view=<empty>
+firstA nativeTaskMatches=true
+firstA viewMatches=false
+firstA bothDraftsIntact=true
+firstB added(github.com/fixture/task-regression#17) active=github.com/fixture/task-regression#16 view=17/tab1
+firstB deactivated(github.com/fixture/task-regression#16) active=github.com/fixture/task-regression#17 view=17/tab1
+firstB activated(github.com/fixture/task-regression#17) active=github.com/fixture/task-regression#17 view=17/tab1
+firstB restore(<empty>) active=github.com/fixture/task-regression#17 view=<empty>
+firstB called 0.2.2 native binding sequence
+firstB settled active=github.com/fixture/task-regression#17 view=<empty>
+firstB nativeTaskMatches=true
+firstB viewMatches=false
+firstB bothDraftsIntact=true
+backA added(github.com/fixture/task-regression#16) active=github.com/fixture/task-regression#17 view=<empty>
+backA deactivated(github.com/fixture/task-regression#17) active=github.com/fixture/task-regression#16 view=<empty>
+backA activated(github.com/fixture/task-regression#16) active=github.com/fixture/task-regression#16 view=<empty>
+backA restore(<empty>) active=github.com/fixture/task-regression#16 view=<empty>
+backA restore(16/tab0) active=github.com/fixture/task-regression#16 view=16/tab0
+backA settled active=github.com/fixture/task-regression#16 view=16/tab0
+backA nativeTaskMatches=true
+backA viewMatches=true
+backA bothDraftsIntact=true
+backB added(github.com/fixture/task-regression#17) active=github.com/fixture/task-regression#16 view=16/tab0
+backB deactivated(github.com/fixture/task-regression#16) active=github.com/fixture/task-regression#17 view=16/tab0
+backB activated(github.com/fixture/task-regression#17) active=github.com/fixture/task-regression#17 view=16/tab0
+backB restore(<empty>) active=github.com/fixture/task-regression#17 view=<empty>
+backB restore(17/tab1) active=github.com/fixture/task-regression#17 view=17/tab1
+backB settled active=github.com/fixture/task-regression#17 view=17/tab1
+backB nativeTaskMatches=true
+backB viewMatches=true
+backB bothDraftsIntact=true
+FAIL

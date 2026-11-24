@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="team.segroup11.review.state.ReviewStateTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-24T07:36:54.600Z" hostname="HUAWEI" time="0.067">
+  <properties/>
+  <testcase name="lostReceiptAndInterruptedSendRequireFreshGetAndHumanDecision" classname="team.segroup11.review.state.ReviewStateTest" time="0.051"/>
+  <testcase name="doubleClickAndLateCompletionNeverOverwriteAnotherRecordOrNewerDraft" classname="team.segroup11.review.state.ReviewStateTest" time="0.006"/>
+  <testcase name="damagedIndividualReportAndUnknownStorageVersionPreserveOriginalData" classname="team.segroup11.review.state.ReviewStateTest" time="0.003"/>
+  <testcase name="explicitSendCapturesOriginalTargetTextAndRevisionUntilReceipt" classname="team.segroup11.review.state.ReviewStateTest" time="0.001"/>
+  <testcase name="roundTripPreservesEveryDraftAndOnlyStoresContextLocators" classname="team.segroup11.review.state.ReviewStateTest" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
