@@ -80,6 +80,8 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     val panel = JPanel(BorderLayout(4, 4))
 
     private var session: GitHubSession? = null
+    private var discovery: Discovery? = null
+    private var replaceOnFirstPage = false
     private var number: Long? = null
     private var detail: IssueReviewTask? = null
     private val comments = linkedMapOf<Long, ReviewComment>()
@@ -128,7 +130,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         list.addListSelectionListener { if (!it.valueIsAdjusting && !updating) list.selectedValue?.let { row -> selectIssue(row.numberValue) } }
         filter.addActionListener { resetList() }
         query.onChange { searchTimer.restart() }
-        repoBox.addActionListener { if (!updating) invalidateConnection() }
+        repoBox.addActionListener { if (!updating) { invalidateConnection(); updateAccounts() } }
         accountBox.addActionListener { if (!updating) invalidateConnection() }
         tabs.addChangeListener { if (tabs.selectedIndex == 0 && comments.isEmpty()) loadComments() }
         discover()
@@ -172,13 +174,12 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         background({ gateway.discover() }, { found ->
             if (e != epoch) return@background
             updating = true
+            discovery = found
             repoBox.model = DefaultComboBoxModel(found.repositories.toTypedArray())
-            accountBox.model = DefaultComboBoxModel(found.accounts.toTypedArray())
-            repoBox.selectedItem = found.repositories.firstOrNull { it.key.toString() == props.getValue("issueReview.repo") }
+            repoBox.selectedItem = found.repositories.firstOrNull { it.key.canonical == props.getValue("issueReview.repo") }
                 ?: found.repositories.singleOrNull()
-            accountBox.selectedItem = found.accounts.firstOrNull { it.id == props.getValue("issueReview.account") }
-                ?: found.accounts.singleOrNull()
             updating = false
+            updateAccounts()
             connection.text = when {
                 found.repositories.isEmpty() -> "项目中没有可用的 GitHub fetch remote"
                 found.accounts.isEmpty() -> "请在 IDE 的 GitHub 设置登录，然后重新检测"
@@ -186,6 +187,17 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             }
             if (repoBox.selectedItem != null && accountBox.selectedItem != null) connect()
         }, { if (e == epoch) connection.text = it })
+    }
+
+    private fun updateAccounts() {
+        val found = discovery ?: return
+        val host = (repoBox.selectedItem as? RepoChoice)?.key?.server
+        val candidates = found.accounts.filter { it.server == host }
+        updating = true
+        accountBox.model = DefaultComboBoxModel(candidates.toTypedArray())
+        accountBox.selectedItem = candidates.find { it.id == props.getValue("issueReview.account") }
+            ?: candidates.find { it.id == found.defaultAccountId } ?: candidates.singleOrNull()
+        updating = false
     }
 
     private fun connect() {
@@ -197,7 +209,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         background({ gateway.connect(target.key, account.id) }, { result ->
             if (e != epoch) return@background
             session = result
-            props.setValue("issueReview.repo", target.key.toString())
+            props.setValue("issueReview.repo", target.key.canonical)
             props.setValue("issueReview.account", account.id)
             connection.text = "${target.label} · ${account.login}"
             resetList()
@@ -206,7 +218,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
 
     private fun resetList() {
         queryEpoch++
-        issues.clear()
+        replaceOnFirstPage = true
         paging = false
         nextPage = if (session != null) 1 else null
         renderList()
@@ -225,6 +237,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         background({ gateway.list(s, state, p) }, { page ->
             if (e != queryEpoch) return@background
             paging = false
+            if (replaceOnFirstPage) { issues.clear(); replaceOnFirstPage = false }
             page.items.forEach { issues[it.numberValue] = it }
             nextPage = page.nextPage
             renderList()
@@ -236,8 +249,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         updating = true
         listModel.clear()
         val q = query.text.trim()
-        val n = q.removePrefix("#").toLongOrNull()
-        issues.values.filter { if (n != null) it.numberValue == n else it.summary.contains(q, true) }.forEach {
+        issues.values.filter { it.matches(q) }.forEach {
             listModel.addElement(it)
             if (it.numberValue == number) list.selectedIndex = listModel.size() - 1
         }

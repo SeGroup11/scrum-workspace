@@ -1,1 +1,9 @@
 /.github-app-keys/
+.gradle/
+.intellijPlatform/
+.kotlin/
+.idea/
+build/
+out/
+*.iml
+local.properties
