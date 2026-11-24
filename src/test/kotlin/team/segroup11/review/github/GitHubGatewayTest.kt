@@ -6,9 +6,11 @@ import kotlinx.coroutines.runBlocking
 import org.jetbrains.plugins.github.api.GithubApiRequest
 import org.jetbrains.plugins.github.api.GithubApiResponse
 import org.jetbrains.plugins.github.api.GithubServerPath
+import org.jetbrains.plugins.github.exceptions.GithubAuthenticationException
 import org.jetbrains.plugins.github.exceptions.GithubStatusCodeException
 import org.junit.Assert.*
 import org.junit.Test
+import java.awt.Component
 import java.io.IOException
 import java.io.InputStream
 import java.io.Reader
@@ -22,12 +24,21 @@ private class Replay : ConnectionAccess {
     val users = mutableMapOf("primary" to 11L, "secondary" to 22L)
     val calls = mutableListOf<String>()
     var status: Int? = null
+    var authFailureAt: String? = null
+    var confirmLogin = false
+    val reauthAccounts = mutableListOf<String>()
     var commentsPageFailure = false
     var uncertainPost = false
 
     override fun discover() = Discovery(listOf(repo, alternate).map { RepoChoice(it, it.canonical) },
         users.keys.map { AccountChoice(it, it, repo.server) }, null, true)
     override fun isAvailable(id: String, repo: RepoKey) = id in users && repo.server == "github.com"
+    override fun reauthenticate(id: String, repo: RepoKey, parent: Component): Boolean {
+        if (!isAvailable(id, repo)) throw GitHubFailure("账号已移除")
+        reauthAccounts += id
+        if (confirmLogin) authFailureAt = null
+        return confirmLogin
+    }
     override suspend fun bind(id: String, repo: RepoKey): BoundAccount {
         if (!isAvailable(id, repo)) throw GitHubFailure("账号已移除")
         val transport = object : GitHubTransport {
@@ -36,6 +47,7 @@ private class Replay : ConnectionAccess {
                 val query = URI(request.url).query.orEmpty()
                 val method = if (request is GithubApiRequest.Post) "POST" else "GET"
                 calls += "$id $method $path?$query"
+                if (path == authFailureAt) throw GithubAuthenticationException("server response not for display")
                 status?.let { throw GithubStatusCodeException("fixture", it) }
                 var next: String? = null
                 val body = when {
@@ -83,6 +95,31 @@ private class Replay : ConnectionAccess {
 }
 
 class GitHubGatewayTest {
+    @Test fun distinguishIdentityAndRepositoryAndReauthenticateSelectedAccountG1() = runBlocking {
+        val fake = Replay()
+        val gateway = GitHubGateway(fake)
+        fun connectFailure() = assertThrows(GitHubFailure::class.java) {
+            runBlocking { gateway.connect(fake.repo, "secondary") }
+        }
+        fake.authFailureAt = "/user"
+        val identity = connectFailure()
+        assertEquals(GitHubAuthStage.IDENTITY, identity.authStage)
+        assertEquals(1, fake.calls.size)
+        assertFalse(identity.message!!.contains("server response"))
+        fake.authFailureAt = "/repos/group11/exporter"
+        val repository = connectFailure()
+        assertEquals(GitHubAuthStage.REPOSITORY, repository.authStage)
+        assertNotEquals(identity.message, repository.message)
+        val parent = javax.swing.JPanel()
+        assertFalse(gateway.reauthenticate("secondary", fake.repo, parent))
+        assertEquals(GitHubAuthStage.REPOSITORY, connectFailure().authStage)
+        fake.confirmLogin = true
+        assertTrue(gateway.reauthenticate("secondary", fake.repo, parent))
+        assertEquals(22L, gateway.connect(fake.repo, "secondary").userId)
+        assertEquals(listOf("secondary", "secondary"), fake.reauthAccounts)
+        assertEquals(0, fake.calls.count { " POST " in it })
+    }
+
     @Test fun remoteAndAccountIsolationG1() = runBlocking {
         val fake = Replay()
         val gateway = GitHubGateway(fake)

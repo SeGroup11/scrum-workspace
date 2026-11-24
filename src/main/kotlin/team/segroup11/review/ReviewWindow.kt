@@ -105,9 +105,11 @@ internal class ReviewWindow(private val project: Project) : Disposable {
 
     init {
         panel.border = BorderFactory.createEmptyBorder(5, 6, 5, 6)
-        panel.add(column(line(JLabel("仓库"), repoBox, JLabel("账号"), accountBox,
-            button("连接") { connect() }, button("重新检测") { discover() },
-            button("GitHub 账号") { ShowSettingsUtil.getInstance().showSettingsDialog(project, "GitHub") }), connection), BorderLayout.NORTH)
+        panel.add(column(line(JLabel("仓库"), repoBox, JLabel("账号"), accountBox),
+            line(button("连接") { connect() }, button("重新检测") { discover() },
+                button("重新认证所选账号") { reauthenticate() },
+                button("GitHub 账号") { ShowSettingsUtil.getInstance().showSettingsDialog(project, "GitHub") }),
+            connection), BorderLayout.NORTH)
         val left = JPanel(BorderLayout(3, 3))
         left.add(column(JLabel("搜索 Issue"), query, filter), BorderLayout.NORTH)
         left.add(JBScrollPane(list))
@@ -147,7 +149,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         })
         title.putClientProperty("html.disable", true)
         panel.add(JBSplitter(false, 0.29f).apply { firstComponent = left; secondComponent = panelRight })
-        repoBox.renderer = labelRenderer { (it as? RepoChoice)?.label ?: "选择仓库" }
+        repoBox.renderer = labelRenderer { (it as? RepoChoice)?.key?.canonical ?: "选择仓库" }
         accountBox.renderer = labelRenderer { (it as? AccountChoice)?.login ?: "选择账号" }
         list.addListSelectionListener { if (!it.valueIsAdjusting && !updating) list.selectedValue?.let { row -> selectIssue(row.numberValue) } }
         filter.addActionListener { resetList() }
@@ -242,6 +244,19 @@ internal class ReviewWindow(private val project: Project) : Disposable {
             resetList()
             (awaitingRestore ?: store.lastView)?.let(::restoreView)
         }, { if (e == epoch) connection.text = it })
+    }
+
+    private fun reauthenticate() {
+        val target = repoBox.selectedItem as? RepoChoice ?: return
+        val account = accountBox.selectedItem as? AccountChoice ?: return
+        invalidateConnection()
+        connection.text = "请在 IDE 的 GitHub 认证窗口确认所选账号"
+        try {
+            if (gateway.reauthenticate(account.id, target.key, panel)) connect()
+            else connection.text = "已取消重新认证"
+        } catch (e: GitHubFailure) {
+            connection.text = e.message
+        }
     }
 
     private fun resetList() {
