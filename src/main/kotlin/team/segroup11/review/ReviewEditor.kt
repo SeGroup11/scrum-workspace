@@ -154,7 +154,7 @@ internal class ReviewEditor(
     private fun clearPreview() { preview = null; previewLabel.text = " " }
     private fun canSend(p: ViewPointer): Boolean {
         val snap = store.snapshot(p)
-        return !snap.sending && snap.unknown == null && editor.text.isNotBlank()
+        return currentDetail?.numberValue == p.number && !snap.sending && snap.unknown == null && editor.text.isNotBlank()
     }
 
     private fun update() {
@@ -170,7 +170,7 @@ internal class ReviewEditor(
             reportId = stored?.requestId
             clearPreview()
             reportRows.clear()
-            stored?.report?.rows?.forEach(reportRows::addElement)
+            stored?.report?.rows?.sortedBy { it.status == "not_applicable" }?.forEach(reportRows::addElement)
             if (!reportRows.isEmpty) rows.selectedIndex = 0
         }
         analyze.isEnabled = currentDetail != null && snap?.running == false
