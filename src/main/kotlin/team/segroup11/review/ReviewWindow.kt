@@ -1,5 +1,7 @@
 package team.segroup11.review
 
+import com.intellij.dvcs.repo.VcsRepositoryManager
+import com.intellij.dvcs.repo.VcsRepositoryMappingListener
 import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.Disposable
@@ -13,7 +15,8 @@ import com.intellij.ui.JBSplitter
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.content.ContentFactory
-import com.intellij.tasks.TaskManager
+import git4idea.repo.GitRepository
+import git4idea.repo.GitRepositoryChangeListener
 import kotlinx.coroutines.*
 import team.segroup11.review.github.*
 import team.segroup11.review.model.ReportCodec
@@ -92,6 +95,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
 
     private var session: GitHubSession? = null
     private var discovery: Discovery? = null
+    private val discoveryUpdates = RepositoryDiscovery()
     private var replaceOnFirstPage = false
     private var number: Long? = null
     private var detail: IssueReviewTask? = null
@@ -151,8 +155,7 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         actions.add(button("设为当前 IDE 任务") {
             val task = detail ?: return@button
             val p = pointer() ?: return@button
-            store.bindTask(task.id, p)
-            TaskManager.getManager(project).activateTask(task.withComments(comments.values.toList()), true)
+            store.activateTask(task.withComments(comments.values.toList()), p)
         })
         title.putClientProperty("html.disable", true)
         panel.add(JBSplitter(false, 0.29f).apply { firstComponent = left; secondComponent = panelRight })
@@ -169,6 +172,9 @@ internal class ReviewWindow(private val project: Project) : Disposable {
                 if (tabs.selectedIndex == 0 && comments.isEmpty()) loadComments()
             }
         }
+        val bus = project.messageBus.connect(this)
+        bus.subscribe(VcsRepositoryManager.VCS_REPOSITORY_MAPPING_UPDATED, VcsRepositoryMappingListener { repositoryChanged() })
+        bus.subscribe(GitRepository.GIT_REPO_CHANGE, GitRepositoryChangeListener { repositoryChanged() })
         discover()
     }
 
@@ -204,11 +210,19 @@ internal class ReviewWindow(private val project: Project) : Disposable {
         selectIssue(null)
     }
 
+    private fun repositoryChanged() {
+        SwingUtilities.invokeLater {
+            if (!disposed && !project.isDisposed && discoveryUpdates.repositoryChanged()) discover()
+        }
+    }
+
     private fun discover() {
         invalidateConnection()
         val e = epoch
+        discoveryUpdates.started()
         background({ gateway.discover() }, { found ->
             if (e != epoch) return@background
+            val retry = discoveryUpdates.finished(found.repositories.isNotEmpty())
             updating = true
             discovery = found
             repoBox.model = DefaultComboBoxModel(found.repositories.toTypedArray())
@@ -222,7 +236,13 @@ internal class ReviewWindow(private val project: Project) : Disposable {
                 else -> "请选择仓库与账号"
             }
             if (repoBox.selectedItem != null && accountBox.selectedItem != null) connect()
-        }, { if (e == epoch) connection.text = it })
+            if (retry) discover()
+        }, {
+            if (e == epoch) {
+                connection.text = it
+                if (discoveryUpdates.finished(discovery?.repositories?.isNotEmpty() == true)) discover()
+            }
+        })
     }
 
     private fun updateAccounts() {
@@ -314,7 +334,12 @@ internal class ReviewWindow(private val project: Project) : Disposable {
     }
 
     private fun restoreView(p: ViewPointer?) {
-        if (p == null) { awaitingRestore = null; selectIssue(null); return }
+        if (p == null) {
+            awaitingRestore = null
+            selectIssue(null)
+            renderList()
+            return
+        }
         val s = session
         if (s == null || s.accountKey != p.accountKey || s.repo.canonical != p.repoCanonical) {
             awaitingRestore = p

@@ -15,7 +15,11 @@ class ReviewContextProvider : WorkingContextProvider() {
         pointer?.let { element.addContent(it.toElement("view")) }
     }
     override fun loadContext(project: Project, element: Element) {
-        project.service<ReviewStore>().restore(pointerFrom(element.getChild("view")))
+        val store = project.service<ReviewStore>()
+        val saved = pointerFrom(element.getChild("view"))
+        store.restore(saved ?: store.boundTask(TaskManager.getManager(project).activeTask.id))
     }
-    override fun clearContext(project: Project) { project.service<ReviewStore>().restore(null) }
+    override fun clearContext(project: Project) {
+        project.service<ReviewStore>().clearTaskContext(TaskManager.getManager(project).activeTask.id)
+    }
 }

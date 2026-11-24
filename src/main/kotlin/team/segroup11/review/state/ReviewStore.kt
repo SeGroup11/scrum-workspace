@@ -6,6 +6,8 @@ import com.intellij.openapi.application.ModalityState
 import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
+import com.intellij.tasks.Task
+import com.intellij.tasks.TaskManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -47,8 +49,23 @@ class ReviewStore(private val project: Project, private val scope: CoroutineScop
         onEdt { listeners.forEach { it.restored(p) } }
     }
 
-    fun bindTask(taskId: String, p: ViewPointer) {
-        synchronized(lock) { if (!data.futureVersion) data.tasks[taskId] = p }
+    fun activateTask(task: Task, pointer: ViewPointer) {
+        val manager = TaskManager.getManager(project)
+        val currentTaskId = manager.activeTask.id
+        synchronized(lock) { data.beginTaskActivation(task.id, pointer, currentTaskId) }
+        try {
+            manager.activateTask(task, true)
+        } catch (failure: Exception) {
+            synchronized(lock) { data.consumeActivationClear(task.id) }
+            throw failure
+        }
+    }
+
+    internal fun clearTaskContext(activeTaskId: String) {
+        // Tasks clears all providers after selecting the new task, before loading its snapshot.
+        // A first activation has no saved snapshot to bring the selected Issue back.
+        val keepSelection = synchronized(lock) { data.consumeActivationClear(activeTaskId) }
+        if (!keepSelection) restore(null)
     }
     fun boundTask(taskId: String): ViewPointer? = synchronized(lock) { data.tasks[taskId] }
     internal fun taskContext(taskId: String): ViewPointer? = synchronized(lock) {
