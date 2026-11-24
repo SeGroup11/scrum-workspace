@@ -1,0 +1,13 @@
+{
+  "product": "PY-262.9437.214",
+  "launch": "GUI with separate config/system/plugins/log and an empty test project",
+  "headless": false,
+  "zipSha256": "e0b10cede8dc310990fc1dad747cf46a9c6319a4cb1c89db9e40156cc394a0d3",
+  "installedJarSha256": "a1403c58e3a9ce7f9303f6259cc1ff86dd7393d4400dfb326d1fc2b483c7c68f",
+  "id": "team.segroup11.issue-review",
+  "name": "GitHub Issue Quality Review",
+  "version": "0.2.0",
+  "toolWindowId": "Issue Review",
+  "officialLog": "pycharm-startup.log",
+  "uiWitness": "Project workspace contents and plugin tool window not confirmed by capture."
+}
