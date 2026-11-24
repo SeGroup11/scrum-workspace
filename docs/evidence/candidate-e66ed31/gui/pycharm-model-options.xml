@@ -1,6 +1,6 @@
 <application>
   <component name="Group11IssueReviewModel">
     <option name="baseUrl" value="http://127.0.0.1:18535/v1" />
-    <option name="modelId" value="group11-local" />
+    <option name="modelId" value="slow-success" />
   </component>
 </application>

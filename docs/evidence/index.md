@@ -38,3 +38,9 @@
 看板有三个 Sprint，每个 Sprint 四张故事。各卡的实际状态可按序号回读。0.2.1 的锁定产物、课程材料及测试范围汇在新的发布草稿。[看板快照](candidate-e66ed31/github/project.json) · [S1 修复评审](https://github.com/SeGroup11/scrum-workspace/pull/18#pullrequestreview-6035485040) · [S3 候选评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6035485566) · [发布列表中的 v0.2.1-rc.1 草稿（ID 456437638）](https://github.com/SeGroup11/scrum-workspace/releases)
 
 三条产品分支在同一日实际执行。仓库分别保留主责组、交叉评审角色、Git 作者和 QA 身份。八名成员的姓名、独立成员评审、会议、真实用户反馈及其他组复现仅在实际发生后补入。
+
+## 私仓实发暴露的字段与计数缺陷
+
+组织授权后，WebStorm 和 PyCharm 都读到了私仓 A/B 的原文。WebStorm 使用 material4002 对 #17 发送一次，独立 QA 验证评论 ID 7125780145、逐字正文和 0→1；#16 仍为 0。0.2.1 把评论作者及日期显示为未知，讨论区仍显示 0 条。旧安装包的独立类加载器复现了字段丢失。同一候选的 PyCharm 对 10 秒成功、503、重试分别测得首帧 6/5/19 ms。[评论与回执](candidate-e66ed31/github/webstorm-receipt.json) · [缺陷 Check](https://github.com/SeGroup11/scrum-workspace/runs/138308671600) · [真实首帧与交互](https://github.com/SeGroup11/scrum-workspace/runs/138309854800)
+
+故事 1.3 和 2.4 的修复将作者与时间改为直接映射 API 字段，并让界面从当前去重后的评论集合计算条数。新候选源码为 267063f。新包从干净归档执行 23 项回归，双类加载器读取了实际作者和日期，四个精确构建均为 Compatible。故事 1.1 的首轮可安装、可读私仓路径已按原条件关闭，其余卡按各自验收条件追踪。[23 项 Check](https://github.com/SeGroup11/scrum-workspace/runs/138315005604) · [0.2.2 评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6035965374) · [看板快照](candidate-267063f/github/project.json) · [最新验收矩阵](acceptance.md)。[真实字段输入](candidate-e66ed31/github/field-regression-input.json) · [修复提交](https://github.com/SeGroup11/scrum-workspace/commit/267063f8d7fc2d321f03d386b2ce9c64553c916c) · [0.2.1 验收矩阵](acceptance-0.2.1.md)

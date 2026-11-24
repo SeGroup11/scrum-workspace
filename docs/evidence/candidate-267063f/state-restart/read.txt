@@ -1,0 +1,7 @@
+process=32160 phase=read project=QA-Project
+registered Tasks extension=team.segroup11.review.state.ReviewContextProvider
+nativeProjectClose=true
+modelChatRequests=0
+GitHub GET/POST uninstrumented; this project has no GitHub account or remote.
+Last B tab and explicit empty edit revision, exact A draft with blank line, tab, terminal character and trailing spaces, saved A report identity, and old A-only Tasks locator verified.
+PASS

@@ -2,12 +2,12 @@
 param(
     [Parameter(Mandatory)] [string] $Zip,
     [Parameter(Mandatory)] [string] $PyCharm,
-    [Parameter(Mandatory)] [string] $Output
+    [Parameter(Mandatory)] [string] $Output,
+    [ValidatePattern('^[a-fA-F0-9]{64}$')] [string] $Sha256 = '71c549a8203edb80060d37411ff344a32b10cec534982121163fe920c52b4cd4'
 )
 $ErrorActionPreference = 'Stop'
-$expected = '71c549a8203edb80060d37411ff344a32b10cec534982121163fe920c52b4cd4'
 $archive = Get-Item -LiteralPath $Zip
-if ((Get-FileHash -LiteralPath $archive.FullName).Hash -ine $expected) { throw 'Unexpected ZIP hash.' }
+if ((Get-FileHash -LiteralPath $archive.FullName).Hash -ine $Sha256) { throw 'Unexpected ZIP hash.' }
 $info = Get-Content -LiteralPath "$PyCharm/product-info.json" -Raw | ConvertFrom-Json
 if ("$($info.productCode)-$($info.buildNumber)" -ne 'PY-262.9437.214') { throw 'Unexpected IDE build.' }
 $dir = (New-Item -ItemType Directory -Path (Join-Path $Output (Get-Date -Format 'yyyyMMdd-HHmmssfff')) -Force).FullName
