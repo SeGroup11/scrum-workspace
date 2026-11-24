@@ -176,6 +176,10 @@ public final class WindowProbe implements ApplicationStarter {
             openReplay(reopened);
             waitFor("closed project reopened and remembered account, repo, Issue B, latest draft",()->showingB() && ((JTextArea)field(field(window,"editor"),"editor")).getText().equals("Beta draft 17"));
             traceView("after normal project close and reopen",reopened);
+            JComboBox<?> reopenedFilter=field(window,"filter");
+            JList<IssueReviewTask> reopenedList=field(window,"list");
+            edt(()->reopenedFilter.setSelectedItem(IssueFilter.OPEN));
+            waitFor("open filter requests state=open and displays open #17 after PR-only page",()->trace.stream().anyMatch(s->s.equals("GET two /repos/qa/beta/issues?state=open&per_page=50&page=2")) && reopenedList.getModel().getSize()==1 && !reopenedList.getModel().getElementAt(0).isClosed() && reopenedList.getModel().getElementAt(0).getNumberValue()==17);
             edt(()->Disposer.dispose(window));
             edt(()->{if(!projects.closeAndDispose(reopened)) throw new AssertionError("Native close failed");});
             trace.add(restored[0]?"PASS":"FAIL: explicit same-window rediscovery did not preserve B selection");

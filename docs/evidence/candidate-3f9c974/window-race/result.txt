@@ -38,9 +38,12 @@ observed blank isolated IDE discovered no remote
 GET two /user?
 GET two /repos/qa/beta?
 GET two /repos/qa/beta/issues?state=all&per_page=50&page=1
-GET two /repos/qa/beta/issues/17/comments?per_page=50&page=1
 GET two /repos/qa/beta/issues/17?
+GET two /repos/qa/beta/issues/17/comments?per_page=50&page=1
 GET two /repos/qa/beta/issues?state=all&per_page=50&page=2
 observed closed project reopened and remembered account, repo, Issue B, latest draft
 after normal project close and reopen connection=Beta · two; title=qa/beta  #17  beta-17  ·  打开; target=回复至 qa/beta #17; draft=Beta draft 17; pending=null; latest=ViewPointer(accountKey=github.com:202, repoCanonical=github.com/qa/beta, number=17, tab=0)
+GET two /repos/qa/beta/issues?state=open&per_page=50&page=1
+GET two /repos/qa/beta/issues?state=open&per_page=50&page=2
+observed open filter requests state=open and displays open #17 after PR-only page
 FAIL: explicit same-window rediscovery did not preserve B selection

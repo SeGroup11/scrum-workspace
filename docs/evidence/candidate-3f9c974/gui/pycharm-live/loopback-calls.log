@@ -1,1 +1,3 @@
 calls=5 case=slow-success elapsed_ms=10000
+calls=9 case=slow-error elapsed_ms=10031
+calls=10 case=slow-success elapsed_ms=10000

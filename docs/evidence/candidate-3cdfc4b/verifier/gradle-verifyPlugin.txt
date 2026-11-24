@@ -1,0 +1,8 @@
+Verifying github-issue-review-0.2.4.zip SHA-256 a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709
+2026-11-24T17:36:39 [main] INFO  verification - Finished 1 of 4 verifications (in 152.3 s): PY-262.9437.214 against team.segroup11.issue-review:0.2.4: Compatible. 5 usages of deprecated API. 6 usages of experimental API
+2026-11-24T17:37:16 [main] INFO  verification - Finished 2 of 4 verifications (in 189.0 s): WS-262.10315.144 against team.segroup11.issue-review:0.2.4: Compatible. 5 usages of deprecated API. 6 usages of experimental API
+2026-11-24T17:37:26 [main] INFO  verification - Finished 3 of 4 verifications (in 199.4 s): RD-262.9437.287 against team.segroup11.issue-review:0.2.4: Compatible. 5 usages of deprecated API. 6 usages of experimental API
+2026-11-24T17:37:57 [main] INFO  verification - Finished 4 of 4 verifications (in 230.0 s): IU-262.10315.125 against team.segroup11.issue-review:0.2.4: Compatible. 5 usages of deprecated API. 6 usages of experimental API
+2026-11-24T17:37:57 [main] INFO  verification - Total amount of plugins and dependencies downloaded: 0 B
+2026-11-24T17:37:57 [main] INFO  verification - Total amount of space used for plugins and dependencies: 0 B
+BUILD SUCCESSFUL in 5m 38s

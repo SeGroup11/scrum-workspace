@@ -1,0 +1,5 @@
+2026-11-24 17:26:28,075 [1842635]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE SHUTDOWN ------------------------------------------------------
+2026-11-24 17:26:29,830 [      7]   INFO - #c.i.p.i.b.AppStarter - ------------------------------------------------------ IDE STARTED ------------------------------------------------------
+2026-11-24 17:26:29,861 [     38]   INFO - #c.i.p.i.b.AppStarter - IDE: PyCharm (build #PY-262.9437.214, Tue, 11 Aug 2026 15:48:00 GMT)
+2026-11-24 17:26:30,589 [    766]   INFO - #c.i.p.i.b.AppStarter - Loaded custom plugins: GitHub Issue Quality Review (0.2.3)
+2026-11-24 17:26:33,047 [   3224]   INFO - #c.i.u.i.UnindexedFilesScanner - [3e357e77] Started scanning for indexing of [Group11-Candidate-PyCharm]. Reason: On project open
