@@ -61,6 +61,7 @@ class ReviewStore(private val project: Project, private val scope: CoroutineScop
         val id = synchronized(lock) { data.startAnalysis(p) } ?: return false
         changed(p)
         scope.launch(Dispatchers.IO) {
+            val started = System.nanoTime()
             try {
                 val result = runInterruptible { ModelGateway().evaluate(title, body) }
                 synchronized(lock) { data.finishAnalysis(p, id, result, null, false) }
@@ -71,6 +72,8 @@ class ReviewStore(private val project: Project, private val scope: CoroutineScop
                 val reason = if (e is ModelFailure) e.message else "分析失败，可手动重试。"
                 synchronized(lock) { data.finishAnalysis(p, id, null, reason, e is ModelConfigurationException) }
             } finally {
+                com.intellij.openapi.diagnostic.Logger.getInstance(ReviewStore::class.java)
+                    .info("IssueReview analysis completed elapsed_ms=" + (System.nanoTime() - started) / 1_000_000)
                 changed(p)
             }
         }

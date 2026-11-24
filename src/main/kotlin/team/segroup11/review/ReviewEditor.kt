@@ -109,24 +109,11 @@ internal class ReviewEditor(
                 send.isEnabled = canSend(p)
             }
         })
-        editor.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, emptySet())
-        val tab = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0)
-        editor.getInputMap(JComponent.WHEN_FOCUSED).put(tab, "acceptSuggestion")
-        editor.actionMap.put("acceptSuggestion", object : AbstractAction() {
-            override fun actionPerformed(e: java.awt.event.ActionEvent?) {
-                val p = pointer
-                val text = preview
-                if (p == null || text == null || reportId != store.snapshot(p).report?.requestId) {
-                    editor.transferFocus()
-                    return
-                }
-                val end = editor.selectionEnd
-                editor.caretPosition = end
-                editor.insert(text, end)
-                editor.caretPosition = end + text.length
-                clearPreview()
-            }
-        })
+        installSuggestionTab(editor) {
+            val p = pointer
+            if (p != null && reportId == store.snapshot(p).report?.requestId) preview.also { clearPreview() }
+            else null
+        }
         store.subscribe(parent, { key -> if (key == pointer?.key) update() }, restore)
         bind(null, null)
     }
@@ -187,4 +174,23 @@ internal class ReviewEditor(
             if (snap?.unknown != null) "发布结果待确认" else null).joinToString(" · ").ifEmpty { " " }
         snap?.receipt?.let { if (it.remoteId != shownReceipt) { shownReceipt = it.remoteId; receipt(it) } }
     }
+}
+
+internal fun installSuggestionTab(editor: JTextArea, takePreview: () -> String?) {
+    editor.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, emptySet())
+    val tab = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0)
+    editor.getInputMap(JComponent.WHEN_FOCUSED).put(tab, "acceptSuggestion")
+    editor.actionMap.put("acceptSuggestion", object : AbstractAction() {
+        override fun actionPerformed(e: java.awt.event.ActionEvent?) {
+            val text = takePreview()
+            if (text == null) {
+                editor.transferFocus()
+                return
+            }
+            val end = editor.selectionEnd
+            editor.caretPosition = end
+            editor.insert(text, end)
+            editor.caretPosition = end + text.length
+        }
+    })
 }
