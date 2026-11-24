@@ -2,34 +2,32 @@
 
 使用小组私仓 [SeGroup11/scrum-workspace](https://github.com/SeGroup11/scrum-workspace)。A 是 [#16 导出文件为空](https://github.com/SeGroup11/scrum-workspace/issues/16)，B 是 [#17 导出搜索结果](https://github.com/SeGroup11/scrum-workspace/issues/17)。下列操作用于现场演示和复测。每次实际执行的证据见 [#14 候选验收](https://github.com/SeGroup11/scrum-workspace/issues/14)。
 
-## 0.2.2 实测视频
+## 候选演示视频
 
-`CS5351-Group11-demo-0.2.2.mp4` 长 **138 秒**，1280 × 720，中文字幕，SHA-256 为 `adef4ec003f90aa8a2529700ff8b34ffce5dc6ae51c252feded05fd794133568`。直接从锁定 ZIP 加载模型 SDK 与插件运行受控段。真实窗口截图按其来源版本标注，桌面采样段保留原采集间隔。
+`CS5351-Group11-demo-0.2.4.mp4` 共 **193 秒**，H.264、1280 × 720，中文字幕，SHA-256 为 `3f1a154eef6e9d351e9d2908ea65998d9d489bcb1c0b4914d107f9564e432be4`。影片使用实际执行的输出及有来源的窗口画面。只有 01:23–01:39 属于真实平台窗口在受控仓库中的观察日志摘录；其余带产品名的桌面段来自正常授权私仓，按屏幕实际采集顺序节选。
 
-| 时间 | 内容 |
+| 时间 | 可以当场核对的内容 |
 | --- | --- |
-| 00:00–01:03 | 0.2.2 受控回放。#17 的固定输入、逐字引文、追问、Tab 和改写，随后注入伪引文，检查草稿和旧报告。 |
-| 01:03–01:27 | 0.2.1 历史对照。WebStorm 收到真实 #17 回执 7125780145，但作者未知且计数仍是 0。 |
-| 01:27–02:11 | 0.2.2 PyCharm 实机。#16 读到作者和创建时间，慢分析期间切 B 编辑，采纳后改写并显式发送。服务器与工具窗口均返回评论 7126271956，计数为 1，在途新草稿保留。 |
-| 02:11–02:18 | 0.2.2 首次激活原生任务时，右侧面板清空。其后经原生菜单返回 A、B 的结果另行记录。 |
+| 00:00–01:04 | 从 0.2.4 安装包启动固定模型的 HTTP 请求与组件回放，展示 #17 输入、逐字引文、追问、Tab、改写及拒收伪造引文。两次实际请求是慢成功、错误引文。 |
+| 01:04–01:23 | 0.2.1 的未知作者与计数未更新、0.2.2 的回执修复，以及 0.2.2 首次设为原生任务空窗与 0.2.3 稳定后的 #20。 |
+| 01:23–01:39 | 对照两个版本的真实生产窗口观察日志。0.2.3 重检后是否仍选 B 为 false；0.2.4 同一步为 true。 |
+| 01:39–02:12 | 0.2.4 普通 IDEA 读取 #17 原文与报告，依次预览、Tab、改写、显式发送及读回评论 7127681925。 |
+| 02:12–02:34 | 0.2.4 普通 PyCharm 用 #16 运行慢模型，等待时改 B。发送后立即输入新稿，远端评论 7127797042 到达时新稿仍在。 |
+| 02:34–02:49 | 仅加评论、临时改正文、逐字还原正文，在 #16 上核对同一份报告的时效提示。 |
+| 02:49–03:01 | 正常 PyCharm 的 503、旧报告和草稿，以及手动重试后成功的真实帧。 |
+| 03:01–03:13 | 普通 WebStorm 与 Rider 各向 #17 发出一次评论。回执分别为 7127850398、7127880975，#17 分别显示 5 和 6 条。 |
 
-逐帧核对时，在工具窗口中对照选中 Issue、讨论区、计数、编辑框和状态提示，再比对 GitHub 回执中的作者、时间和正文。[PyCharm 实机证据目录](../evidence/candidate-267063f/gui/pycharm-live) · [0.2.2 独立服务器回执](../evidence/candidate-267063f/github/pycharm-receipt.json)
+原始截图、毫秒级生产日志、回环模型计数和四张 GitHub 远端回执一并纳入候选证据归档。两仓实验及 R1 语义回放可按下述步骤重复。只有标明“实机截帧”的画面来自普通产品桌面。[四产品采集记录](../evidence/candidate-3cdfc4b/gui) · [独立远端回执](../evidence/candidate-3cdfc4b/github)
 
-## 0.2.1 历史演示视频
-
-`CS5351-Group11-demo-0.2.1.mp4` 长 133 秒，1280 × 720，带中文字幕。构建目录位于 `build/evidence/course`，SHA-256 为 `b047a860e64b9c745e4bf6d7b21554cd2ea787164f6f82ed4b667cfeda94af54`。
-
-| 时间 | 画面及其来源 |
-| --- | --- |
-| 00:00–01:04 | 受控 HTTP 与 Swing 测试回放。#17 的固定输入经过候选网关，展示逐字引文、Tab 插入、改写与伪引文失败后的草稿保留。 |
-| 01:04–01:35 | WebStorm 0.2.1 实机截取。显示组织授权前的拒绝、授权后的 #17 原文、显式发送前后的草稿与回执。GitHub 读回 ID 7125780145、作者和全文相符；IDE 当时仍显示未知作者和零评论。 |
-| 01:35–02:13 | PyCharm 0.2.1 实机截图与采样时间序列。展示慢成功、503 后旧报告、实际 Tab 采纳，以及重试时切去 B 编辑。十秒等待按原始截图间隔播放。 |
-
-截图字幕标出产品与采集时间，模型回复来自本机受控服务。可通过原始时间戳、生产日志和 GitHub 服务器数据复核相应片段。[WebStorm 窗口](../evidence/candidate-e66ed31/gui/webstorm.md) · [远端发评回执](../evidence/candidate-e66ed31/github/webstorm-receipt.json) · [PyCharm 手动操作与计时](../evidence/candidate-e66ed31/gui/pycharm-live/README.md)
-
-同一候选另有两个独立 PyCharm 进程的退出与恢复实验，归档了真实工作区 XML、旧 Tasks 快照及模型 1/0 次的请求计数。两个进程使用本地测试项目，GitHub 请求未计数。该实验的记录和命令随证据包提供。[恢复实验与复跑方法](../evidence/candidate-e66ed31/state-restart/README.md)
+此前三段私有验收影片分别保留了实机发现与修复的过程。0.2.1 记录真实评论已落地但本地作者和数量错误；0.2.2 显示该问题修复后，首次激活无旧快照的原生任务又暴露空面板；0.2.3 记录任务首次激活修复、三款 IDE 的真实远端评论及同一报告随正文改变而过期。[0.2.1 历史视频与回执](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-c616ca1c718dbf3bdfbf) · [0.2.2 历史视频与回执](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-9ac4cd6d61db5fa5e910) · [0.2.3 历史视频与回执](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-07d4af22255ffb0c13ac)
 
 ## 准备开发实例
+
+要逐份复跑0.2.4 的 A/B 语义实验，在仓库根设置 `IDEA_HOME` 为 IntelliJ IDEA 的安装目录、`PLUGIN_ZIP` 为最终 ZIP，然后运行下方 PowerShell 7.4 命令。需要本机 Python 3，输出目录应为一个新目录。脚本核对 ZIP 摘要，从包内加载实际插件与 SDK，用已冻结的两条输入分别请求回环服务，逐份比较报告及输入摘要。成功会打印 PASS 和两条服务计数。[读取和比较两份报告的源码](../evidence/candidate-3cdfc4b/model/ReplayIssues.java)
+
+```powershell
+./docs/evidence/candidate-3cdfc4b/model/run.ps1 -Zip $env:PLUGIN_ZIP -IdeaHome $env:IDEA_HOME -Output ./build/semantic-replay
+```
 
 用 JDK 25 和仓库自带的 Gradle Wrapper。在 PowerShell 中从仓库根目录运行。若使用已安装的目标 IDE，将 `IDE_HOME` 设置为该产品的安装目录，再把 `"-PlocalPlatformPath=$env:IDE_HOME"` 放在 Gradle 命令的任务名前。首次解析依赖需要网络，之后可使用已有缓存。
 
@@ -70,6 +68,16 @@ python src/test/resources/model/mock_provider.py
 
 Demos 使用真实输入画面、匿名计时和专用测试评论。暂停录制后再填写凭据。给每个实机记录保留产品 build、插件版本、ZIP 摘要、评论 ID 和可复查的证据链接。需要停帧核时的录屏保留原始帧率。
 
+## 两个受控仓库如何复现同窗选择丢失
+
+在两个独立目录分别检出 0.2.3 与 0.2.4，取各自 Release 中的 ZIP。两个版本共用旧候选证据目录里的观察器。它使用真实 PyCharm 平台、生产工具窗口控件和 GitHub SDK 解码器；账号 one/two 和仓库 Alpha/Beta 由内存服务提供。每轮使用新输出目录。将下例中的环境变量指向正在复测的版本。[对照实验和脚本](../evidence/candidate-3f9c974/window-race) · [0.2.4 原始记录](../evidence/candidate-3cdfc4b/window-race/result.txt)
+
+```powershell
+./docs/evidence/candidate-3f9c974/window-race/run.ps1 -Zip $env:PLUGIN_ZIP -Sha256 $env:CANDIDATE_SHA256 -PyCharm $env:PYCHARM_HOME -Output ./build/dual-repo-replay
+```
+
+先让 Alpha #16 的详情和评论挂起，改选账号 two、Beta #17，输入 `Beta draft 17`，再让 Alpha 的两项响应返回。此时两版都应显示 Beta。点击“重新检测”，在 0.2.3 原始记录中查找 `same-window selected B survived rediscovery=false`，0.2.4 在同一步为 `true`。正常关闭并重开后，两版均返回 Beta #17 和原草稿。这个额外步骤能区分本次修复的同窗重检缺陷与项目重启恢复。[0.2.3 失败结果](../evidence/candidate-3f9c974/window-race/result.txt) · [0.2.4 通过结果](../evidence/candidate-3cdfc4b/window-race/result.txt)
+
 ## 复现一次已修缺陷
 
 Sprint 1 的候选包曾因插件显示名称被 Verifier 拒绝。失败状态绑定到了提交 `ae3e8ee` 的 [Check Run](https://github.com/SeGroup11/scrum-workspace/runs/138262252679)。[修复提交 4bc2b85](https://github.com/SeGroup11/scrum-workspace/commit/4bc2b851a6d5f9effea2835b34705c8f59d12d64) 修改描述符的名称。另一组可以在独立检出中分别构建两个提交，记录各自的 ZIP SHA-256，再调用上面的验证脚本比较 Verifier 结果。脚本会核对四款实际 build 并将摘要写入 `build/verification`。请在 [#15](https://github.com/SeGroup11/scrum-workspace/issues/15) 记录复现者、两个 SHA、观察到的错误、修复后结果和原始日志链接。
@@ -91,6 +99,6 @@ Sprint 1 的候选包曾因插件显示名称被 Verifier 拒绝。失败状态�
 .\gradlew.bat test --rerun-tasks --tests '*SlowWorkflowTest'
 ```
 
-最后一条命令启动独立的本机 HTTP 服务，分别运行约 10 秒的成功与 503 回合，并验证 Tab 采纳和报告展示。打开 `build/test-results/test/TEST-team.segroup11.review.SlowWorkflowTest.xml`，核对两轮累计请求计数依次为 1、2。比较绝对耗时时需保留本次测试机器与日志，另行为 GUI 首帧计时。[0.2.1 对照记录](../evidence/candidate-e66ed31/junit/TEST-team.segroup11.review.SlowWorkflowTest.xml)
+最后一条命令启动独立的本机 HTTP 服务，分别运行约 10 秒的成功与 503 回合，并验证 Tab 采纳和报告展示。打开 `build/test-results/test/TEST-team.segroup11.review.SlowWorkflowTest.xml`，核对两轮累计请求计数依次为 1、2。比较绝对耗时时需保留本次测试机器与日志，另行为 GUI 首帧计时。[0.2.4 对照记录](../evidence/candidate-3cdfc4b/junit/TEST-team.segroup11.review.SlowWorkflowTest.xml)
 
 验收行采用“用例 ID、提交与 ZIP、IDE/build/OS/依赖、输入和操作、预期、实测及计数、证据、结论和负责人”的顺序。设计原文见[架构 05](siyuan://blocks/20261123160601-o204afz)，三项质量目标见[上下文恢复](siyuan://blocks/20261121180458-hys1y8e)、[分析响应性](siyuan://blocks/20261121182410-g0nevmj)和[IDE 兼容性](siyuan://blocks/20261121230231-nlhar9k)。

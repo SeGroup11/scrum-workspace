@@ -2,27 +2,58 @@
 
 CS5351 Software Engineering · Group 11 · 项目报告
 
-## 当前候选 0.2.2
+## 0.2.4 候选交付
 
-安装包 `github-issue-review-0.2.2.zip` 为 **75,390,776 字节**，SHA-256 为 `b2eed1cd59d1f9f6f2231c55bb6c0d97ab82c5a6da27963c2a934053739bedf0`。本版修复了 0.2.1 在真实私仓中把作者与日期显示为未知、发布成功后评论计数仍显示 0 的问题。修复提交为 [267063f8d7fc2d321f03d386b2ce9c64553c916c](https://github.com/SeGroup11/scrum-workspace/commit/267063f8d7fc2d321f03d386b2ce9c64553c916c)。
+本版修复了手选另一仓库和 Issue 后，重新检测使右侧详情消失的问题。干净检出构建了唯一安装包 `github-issue-review-0.2.4.zip`，75,393,535 字节，SHA-256 为 `a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709`。19 项 Gradle 任务全部实际执行，耗时 7 分 37 秒。六个测试套件共 26 项均通过。约 10 秒的受控成功、503 回合各触发一次请求，完成时间分别为 12,915 ms、10,057 ms。[源码提交](https://github.com/SeGroup11/scrum-workspace/commit/3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835) · [安装包摘要](../evidence/candidate-3cdfc4b/junit/distribution.json) · [慢响应原始结果](../evidence/candidate-3cdfc4b/junit/TEST-team.segroup11.review.SlowWorkflowTest.xml)
 
-干净构建耗时 7 分 52 秒，19 个 Gradle 任务实际执行，五个套件共 **23/23 项通过**，失败、错误和跳过均为零。SDK 回环成功与 HTTP 503 测试各发一次 POST，完成耗时为 11,476 ms 与 10,041 ms。[构建与原始 JUnit](../evidence/candidate-267063f/junit) · [GitHub 独立检查](https://github.com/SeGroup11/scrum-workspace/runs/138315005604)
+### 正常桌面与真实 GitHub 回执
 
-同一 0.2.2 ZIP 在 IU-262.10315.125、WS-262.10315.144、RD-262.9437.287 和 PY-262.9437.214 上均获 Compatible。每款有 5 处弃用和 6 处实验性 API。隔离运行时的 IntelliJ IDEA 和 PyCharm 各以两种模式完成一次模型回环请求，WebStorm 与 Rider 的隔离配置在启动观察器前因缺许可证退出。[四款 Verifier 原始结果](../evidence/candidate-267063f/verifier/result.json) · [四款运行时边界](../evidence/candidate-267063f/runtime/result.json)
+每款产品均检查安装候选 ZIP、重启后的实际 JAR 和正常授权账号 `material4002`。独立 QA 在本轮开始时读得 #16 两条、#17 三条；下列计数仅对应各次观察时刻。[发评前快照](../evidence/candidate-3cdfc4b/github/before.json)
 
-Gradle 原生 `verifyPlugin` 还对同一分发包执行两项任务，用时 3 分 54 秒，再次取得四款 Compatible。[原生任务输出](../evidence/candidate-267063f/verifier/gradle-verifyPlugin.txt)
+| 产品与目标 | 模型首帧 / 总时间 | GitHub 回执与数量 | 桌面观察 |
+| --- | --- | --- | --- |
+| IntelliJ IDEA → #17 | 11 ms / 10,843 ms | 09:38:09 UTC，评论 [7127681925](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127681925)。当时 #16 为 2 条，#17 为 4 条。 | 在 B 发起分析，去 A 编辑。回 B 核对“导出要快”、预览、Tab 采纳与改写。正式重启后恢复 B 的讨论和指定末字。[IDEA 桌面记录](../evidence/candidate-3cdfc4b/gui/idea.md) · [远端回执](../evidence/candidate-3cdfc4b/github/idea-receipt.json) |
+| PyCharm → #16 | 8 ms / 10,513 ms | 09:43:17 UTC，评论 [7127797042](https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7127797042)。当时 #16 为 3 条，#17 为 4 条。 | 慢分析期间滚动、修改 A、切 B 编辑。改写 A 的建议并显式发送后立即继续写下一条，回执到达时新稿仍在。独立读回的正文指出“有三行搜索结果，导出的 CSV 却仅有表头”。[PyCharm 桌面记录](../evidence/candidate-3cdfc4b/gui/pycharm.md) · [远端回执](../evidence/candidate-3cdfc4b/github/pycharm-receipt.json) |
+| WebStorm → #17 | 34 ms / 11,182 ms | 09:45:38 UTC，评论 [7127850398](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127850398)。当时 #16 为 3 条，#17 为 5 条。 | 点击时的产品标记与追问正文同 GitHub 记录一致。[WebStorm 桌面](../evidence/candidate-3cdfc4b/gui/webstorm.md) · [生产计时](../evidence/candidate-3cdfc4b/gui/webstorm-model.log) · [独立回执](../evidence/candidate-3cdfc4b/github/webstorm-receipt.json) |
+| Rider → #17 | 7 ms / 10,482 ms | 09:46:58 UTC，评论 [7127880975](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127880975)。当时 #16 为 3 条，#17 为 6 条。 | QA 在原 Issue 上核对了作者、UTC 时间、产品标记与全文。[Rider 桌面](../evidence/candidate-3cdfc4b/gui/rider.md) · [生产计时](../evidence/candidate-3cdfc4b/gui/rider-model.log) · [独立回执](../evidence/candidate-3cdfc4b/github/rider-receipt.json) |
 
-0.2.2 使用模型协议相同的一对真实 Issue 原文再次调用回环服务。直接从上述 ZIP 加载插件和模型 SDK，A、B 各发一次 POST，两份报告都包含六项。A 的固定答复仍把已存在的两步复现判为缺失，B 的 CSV 目标和“导出要快”引文仍可逐字核对。修复模型之外的显示问题独立于这两份固定答案。[0.2.2 语义回放](../evidence/candidate-267063f/model/semantic-replay.json) · [调用计数](../evidence/candidate-267063f/model/loopback-calls.log)
+PyCharm 在本轮还比较了同一份报告 `c0868c1b-4a2a-4d9d-9017-859bd5811266` 的三种状态。只在 #16 新增评论后刷新，报告仍为当前；临时修改真实正文后，界面出现“基于较早版本”；逐字还原原文后，同一报告又成为当前。两次远端回读互为逆操作，09:49:41 UTC 的还原结果与修改前正文 SHA-256 均为 `a7e17d6b70bf3e4b3664e937639f92c9aebe660468cf8449d926cd70f7ca180a`，当时仍是三条评论。[仅新增评论](../evidence/candidate-3cdfc4b/gui/pycharm-live/state-same-report-after-single-comment.json) · [改动后提示](../evidence/candidate-3cdfc4b/gui/pycharm-live/2026-11-24T09-48-52-840Z-temporary-body-old-report-and-new-draft.jpg) · [远端变更](../evidence/candidate-3cdfc4b/github/body-apply.json) · [原文还原](../evidence/candidate-3cdfc4b/github/body-restore.json) · [还原后画面](../evidence/candidate-3cdfc4b/gui/pycharm-live/2026-11-24T09-50-04-175Z-restored-original-body-current-report-and-draft.jpg)
 
-在独立加载 0.2.2 候选的反序列化检查中，Issue 读到创建者 `segroup11-backlog[bot]` 及 2026-11-24 06:11:34 UTC，真实评论读到 `material4002` 及 08:08:49 UTC。实机复测前，专用 #16 为 0 条评论，#17 已有 0.2.1 的一条评论 7125780145。[字段复测输出](../evidence/candidate-267063f/github/isolated-loader-result.txt) · [0.2.2 实机前基线](../evidence/candidate-267063f/github/before.json)
+在真实 A #16 的慢响应专项中，每款均直接测量“从点击到状态第一次绘制”与“整个请求完成”两段时间，单位为毫秒。四款的成功、503、显式重试共十二次首帧均在 500 ms 内；项目的 10 秒慢模型解释了完成耗时。等待中滚动、修改 A 以及转到 B 编辑的操作，分别保留在各产品的窗口记录中。
 
-0.2.2 的独立 PyCharm 运行时再次验证了应用级设置和项目恢复。两个项目通过原生注册表分别打开设置表单，读到同一模型与地址；PasswordSafe 只为保存过凭据的端点提供对应密钥。另两个独立进程正常关闭、重开同一项目，A 的空行、制表符、末字、尾空格及报告 ID 保留，B 保持主动清空。恢复旧 Tasks 定位后两项均未改变，测试端点第一次收到一个模型请求，重启时为零。本实验没有统计 GitHub GET/POST。[配置与凭据实证](../evidence/candidate-267063f/settings/README.md) · [工作区与 Tasks 实证](../evidence/candidate-267063f/state-restart/README.md)
+| 产品 | 成功，首帧 / 完成 | 503，首帧 / 完成 | 手动重试，首帧 / 完成 |
+| --- | --- | --- | --- |
+| IntelliJ IDEA | 25 / 10,792 | 63 / 10,042 | 7 / 10,014。[生产日志](../evidence/candidate-3cdfc4b/gui/idea-model.log) |
+| WebStorm | 5 / 10,010 | 10 / 10,042 | 6 / 10,012。[生产日志](../evidence/candidate-3cdfc4b/gui/webstorm-model.log) |
+| Rider | 8 / 10,011 | 5 / 10,074 | 15 / 10,012。[生产日志](../evidence/candidate-3cdfc4b/gui/rider-model.log) |
+| PyCharm | 8 / 10,513 | 9 / 10,045 | 16 / 10,014。[生产日志](../evidence/candidate-3cdfc4b/gui/pycharm-live/production-timings.log) |
 
-在真实 PyCharm 窗口中，安装后主 JAR 与候选 ZIP 中对应 JAR 的 SHA-256 相等。主账号打开 #16 后，详情正确显示 Issue 作者和创建时间。Tab 采纳后，测试者把草稿改为“[CS5351 PY 0.2.2] 根据复现记录，导出的 CSV 只有表头。请补充输入行数、预期导出的行数，以及用于复现的版本。”点击发送后继续编辑。GitHub 于 08:33:05 UTC 在 #16 返回评论 **7126271956**，作者 **material4002**，全文逐字一致。IDE 显示 1 条评论和正确的评论作者、时间、ID，在途新写的本地草稿也保留。#17 原评论未增加。[安装 JAR 对照](../evidence/candidate-267063f/gui/pycharm-jars.json) · [发送后保留新编辑](../evidence/candidate-267063f/gui/pycharm-live/2026-11-24T08-33-18-487Z-published-and-pending-edit-retained.jpg) · [原始回执](../evidence/candidate-267063f/github/pycharm-receipt.json) · [真实评论](https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126271956)
+### 正常重启是否暗中分析或发评
 
-随后使用原生 Tasks 菜单实测时，首次激活没有历史上下文快照的任务后，右侧 Issue 面板变空。这个操作路径在之前的双进程旧快照测试中没有触发。0.2.2 的真实评论修复通过，首次任务激活仍需修复复测。[A 首次激活时的实机画面](../evidence/candidate-267063f/gui/pycharm-live/2026-11-24T08-33-47-832Z-first-activation-a.jpg) · [B 首次激活](../evidence/candidate-267063f/gui/pycharm-live/2026-11-24T08-34-32-963Z-first-activation-b.jpg)
+JBR Flight Recorder（JFR）从新 IDE 进程启动开始，记录插件的 `connect`、`detail`、`postComment` 与 `evaluate` 四个方法入口，直到 A、B 恢复情况可核查。连接与详情的非零记录验证被观察的实际进程确实加载了插件。另有受控发布和正常 IDEA 分析作为阳性对照。方法进入次数由 JFR 取得，GitHub 远端新增评论数由独立 API 读回，模型网络请求数由本机 HTTP 服务日志取得。协程重新进入会产生额外方法事件，它们不能直接折算成 HTTP 次数。[JFR 过滤与复跑](../evidence/candidate-3cdfc4b/restart-calls/README.md) · [模型阳性对照](../evidence/candidate-3cdfc4b/restart-calls/idea-analysis-positive-control.json) · [评论阳性对照](../evidence/candidate-3cdfc4b/restart-calls/ledger-positive-control.json)
 
-被激活的 A、B 后来已各有上下文记录。用原生任务菜单再次切回 A、再回 B，两次均恢复了对应 Issue 与本地草稿。0.2.2 的本次正常窗口慢成功首帧为 **9 ms**，整个调用为 **10,622 ms**，模型服务收到一次请求。[A 的原生菜单恢复](../evidence/candidate-267063f/gui/pycharm-live/2026-11-24T08-35-16-475Z-task-menu-restored-a.jpg) · [B 的恢复](../evidence/candidate-267063f/gui/pycharm-live/2026-11-24T08-35-45-829Z-task-menu-restored-b.jpg) · [生产日志](../evidence/candidate-267063f/gui/pycharm-live/production-timings.log)
+PyCharm 正常退出前，A 草稿修订 23，含空行以及末字“丙”后的两个空格；B 的修订 10 是主动清空的空串。重开后活动 B 仍为空，经原生菜单切到 A 后报告和新稿均可见。两个项目状态快照可逐字符比较。该次记录为 connect 1、detail 2、postComment 0、evaluate 0。[退出前](../evidence/candidate-3cdfc4b/gui/pycharm-live/state-normal-close-before-relaunch.json) · [重开后](../evidence/candidate-3cdfc4b/gui/pycharm-live/state-after-normal-relaunch-native-a.json) · [JFR 原始计数](../evidence/candidate-3cdfc4b/restart-calls/pycharm-restart.json)
+
+四个普通产品的最终进程分别完成正常保存、退出和重新打开。每款都核对了 B 主动清空以及 A 的草稿。对同一组方法的结果如下。
+
+| 重启产品 | 进程 PID | connect | detail | postComment | evaluate |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [IntelliJ IDEA](../evidence/candidate-3cdfc4b/restart-calls/idea-restart.json) | 16024 | 1 | 2 | 0 | 0 |
+| [WebStorm](../evidence/candidate-3cdfc4b/restart-calls/webstorm-restart.json) | 28680 | 1 | 2 | 0 | 0 |
+| [Rider](../evidence/candidate-3cdfc4b/restart-calls/rider-restart.json) | 12244 | 1 | 2 | 0 | 0 |
+| [PyCharm](../evidence/candidate-3cdfc4b/restart-calls/pycharm-restart.json) | 4556 | 1 | 2 | 0 | 0 |
+
+### 同包验证
+
+| 检查 | 0.2.4 实测 |
+| --- | --- |
+| 四款兼容性 | IntelliJ IDEA IU-262.10315.125、WebStorm WS-262.10315.144、Rider RD-262.9437.287、PyCharm PY-262.9437.214 均为 Compatible。每款报告均列出 5 处弃用 API、6 处实验性 API；原生 Gradle 验证耗时 5 分 38 秒，下载 0 B。[四份裁决](../evidence/candidate-3cdfc4b/verifier/result.json) · [Gradle 原始输出](../evidence/candidate-3cdfc4b/verifier/gradle-verifyPlugin.txt) |
+| 项目恢复与 Tasks | 同一项目在两个 PyCharm 进程中正常关闭、重开，A 的空行、末字、尾空格、页签和报告 ID 保持，B 保持主动清空的修订。重启后模型请求为零，旧 Tasks 定位快照恢复 A 后两条最新草稿均保留。原生 Task 首次激活及已有任务互切另有事件次序记录。[项目复测](../evidence/candidate-3cdfc4b/state-restart/read.txt) · [原生 Tasks 复测](../evidence/candidate-3cdfc4b/task-activation/result.txt) |
+| 模型凭据与设置 | 两个项目均从已注册设置面板读到相同地址和模型。受控凭据在端点 A 成功读回；切至 B 时缺少相应凭据，切回 A 后可再次读回。[设置专项](../evidence/candidate-3cdfc4b/settings/result.txt) |
+| 发布结果不确定 | 直接加载候选 JAR 后，将测试发布限定在受控 GitHub 响应。确定 403 产生零条远端记录，显式重试落下一条；另一条先写入后断开。两次查询原 Issue #42 按 ID 合并为两条，另一 Issue #43 为零。三个 POST 都来自显式操作，用户等待期间的新稿保留。[逐请求账本](../evidence/candidate-3cdfc4b/comment-recovery/result.txt) · [丢回执 Check](https://github.com/SeGroup11/scrum-workspace/runs/138350066142) |
+| 两账号及两仓迟到响应 | 先挂起 Alpha #16 的详情与评论，改选 Beta #17 并编辑，再释放旧响应。标题、正文、回复目标与草稿均属于 Beta。同窗重新检测和正常关闭后重开也保留 Beta。两个合成账号经 SDK 解码，不计为两位真实用户。[0.2.3 失败](../evidence/candidate-3f9c974/window-race/result.txt) · [0.2.4 通过](../evidence/candidate-3cdfc4b/window-race/result.txt) |
+
+干净构建和代码评审都绑定到提交 `3cdfc4b`。实际 SDK 请求、私仓桌面操作与固定模型语义复核各有独立证据，自动化执行没有产生两位组员的人工标注。[干净构建 Check](https://github.com/SeGroup11/scrum-workspace/runs/138349043838) · [PR #21 源码评审](https://github.com/SeGroup11/scrum-workspace/pull/21#pullrequestreview-6036812874) [当前逐用例验收矩阵](../evidence/acceptance.md) · [各产品 SDK 回环](../evidence/candidate-3cdfc4b/runtime/result.json) [四款官方兼容 Check](https://github.com/SeGroup11/scrum-workspace/runs/138352449193) · [四张真实评论回执 Check](https://github.com/SeGroup11/scrum-workspace/runs/138359601812) · [实际正文往返 Check](https://github.com/SeGroup11/scrum-workspace/runs/138359625231)
 
 ## 一条可以核实的评审意见
 
@@ -60,7 +91,7 @@ GitHub Issue Forms 可在提交时要求填写特定输入，并把表单内容�
 
 本仓库把项目拆为三个 Sprint。下表按实际工作切片组织。单次执行中累积的证据不代表三个自然周已经过去，也不能替代八位成员的真实认领、同伴评审、会议记录或用户反馈。
 
-2026 年 11 月 24 日从组织看板读回 12 张故事卡，每个 Sprint 各 4 张。当次快照中 12 张均为 In Progress，尚缺实机、人工或跨组证据的故事继续保留该状态。[看板原始快照](../evidence/candidate-e66ed31/github/project.json)
+组织看板中的原定故事为 #4 至 #15，三个 Sprint 各 4 张。0.2.1 时 12 张均在进行中。2026 年 11 月 24 日 10:08 UTC 的最终快照显示原定故事 10/12 Done。各 Sprint 分别为 4/4、3/4、3/4。#9 仍等待独立真人标注及线上模型语义核验，#15 留待跨组人员实际复现与反馈。回顾事项 #23 已完成。下表保留每个故事的设计和实现入口。[初期快照](../evidence/candidate-e66ed31/github/project.json) · [最终看板回读](../evidence/candidate-3cdfc4b/github/project.json) · [四产品五组实操 QA](https://github.com/SeGroup11/scrum-workspace/runs/138367248948)
 
 | Sprint | 故事与设计 | 实现、评审与证据 |
 | --- | --- | --- |
@@ -76,7 +107,7 @@ GitHub Issue Forms 可在提交时要求填写特定输入，并把表单内容�
 
 ### 两条实际专用 Issue 的语义复核
 
-独立自动化复核使用专用 A/B 的实际原文，由 0.2.1 与 0.2.2 候选分别调用本机固定响应服务。每版的 A、B 各发一次 POST，各返回六项并通过协议校验。自动化评审随后逐项比对原文、模型判定和建议。A 被分为 bug，B 被分为 feature，两种分类均与这两个样例吻合。[夹具 A](https://github.com/SeGroup11/scrum-workspace/issues/16) · [夹具 B](https://github.com/SeGroup11/scrum-workspace/issues/17) · [0.2.1 原始报告](../evidence/candidate-e66ed31/model/semantic-replay.json) · [0.2.2 原始报告](../evidence/candidate-267063f/model/semantic-replay.json)
+0.2.4 直接从上述 ZIP 加载插件与 SDK，把专用 A、B 的真实标题和正文发给本机固定响应服务。A、B 各一次 POST，各返回六项并通过协议校验。独立复跑脚本从 ZIP 重新解压、调用服务，逐份核对报告内容与输入摘要，两者均相同。自动化复核再逐项对照原文与报告。A 分类为 bug，B 分类为 feature，均符合各自样例。[A 原文](https://github.com/SeGroup11/scrum-workspace/issues/16) · [B 原文](https://github.com/SeGroup11/scrum-workspace/issues/17) · [本版完整报告](../evidence/candidate-3cdfc4b/model/semantic-replay.json) · [请求计数](../evidence/candidate-3cdfc4b/model/loopback-calls.log) · [复跑脚本](../evidence/candidate-3cdfc4b/model/run.ps1)
 
 | 检查项 | A #16 导出文件为空 | B #17 导出搜索结果 |
 | --- | --- | --- |
@@ -91,49 +122,32 @@ GitHub Issue Forms 可在提交时要求填写特定输入，并把表单内容�
 
 状态单元测试按 XML 字节写出再读回，检查了草稿尾空格、最后一次编辑、清空、跨账号与跨库隔离。测试还模拟了成功回执在编辑后到达、发送被拒绝、响应丢失后重启，以及损坏报告保留可读草稿。[恢复测试](../../src/test/kotlin/team/segroup11/review/state/ReviewStateTest.kt) · [质量目标与完整矩阵](siyuan://blocks/20261123160601-o204afz)
 
-进一步的恢复验证使用了两个独立的 PyCharm 进程和同一个无界面测试项目。第一进程保存旧 Tasks 定位快照、显式分析一次、再改写 A 并主动清空 B，通过真实平台 API 正常关闭项目并退出。第二进程重开后，A 的末字、空行、尾空格、页签与报告 ID 均保持，B 仍是清空后的修订。调用已注册 Tasks provider 加载旧快照后，A、B 最新记录均未被覆盖。模型端点在两次进程中分别收到 1、0 次请求。项目没有 GitHub 账号或 remote，未测 GitHub GET/POST。带真实私仓的 Tasks 菜单操作仍需桌面验收。PyCharm 的首帧计时见下文。[两次进程和项目 XML](../evidence/candidate-e66ed31/state-restart/README.md)
+0.2.1 的平台恢复专项使用了两个独立的 PyCharm 进程和同一个无界面测试项目。第一进程保存旧 Tasks 定位快照、显式分析一次、再改写 A 并主动清空 B，通过真实平台 API 正常关闭项目并退出。第二进程重开后，A 的末字、空行、尾空格、页签与报告 ID 均保持，B 仍是清空后的修订。调用已注册 Tasks provider 加载旧快照后，A、B 最新记录均未被覆盖。模型端点在两次进程中分别收到 1、0 次请求。项目没有 GitHub 账号或 remote，未测 GitHub GET/POST。后续版本的真实私仓桌面操作单独列入候选结果。[两次进程和项目 XML](../evidence/candidate-e66ed31/state-restart/README.md)
 
-同一候选的版本、ZIP 摘要、逐项结果及四款实机情况见下节。由于尚无可审计的人类用户反馈，当前无法量化插件是否减少了澄清往返次数。后续可请不同成员独立标注一组真实缺陷与功能需求，先保留分歧，再讨论“足以验证”的尺度，并抽查建议是否引入原文未承诺的数值。
+各候选使用独立的提交、ZIP 摘要、验收矩阵与实机回执。由于尚无可审计的人类用户反馈，当前无法量化插件是否减少了澄清往返次数。后续可请不同成员独立标注一组真实缺陷与功能需求，先保留分歧，再讨论“足以验证”的尺度，并抽查建议是否引入原文未承诺的数值。
 
-## 0.2.1 历史候选与缺陷复现
+## 缺陷如何从实机操作进入下一版
 
-| 字段 | 候选实测 |
+| 可复现的发现 | 实现与复测 |
 | --- | --- |
-| 版本与制品 | `github-issue-review-0.2.1.zip`，75,389,798 字节 |
-| 实现提交 | [e66ed311cf986d876814f7737f897b526322236a](https://github.com/SeGroup11/scrum-workspace/commit/e66ed311cf986d876814f7737f897b526322236a) |
-| ZIP SHA-256 | `71c549a8203edb80060d37411ff344a32b10cec534982121163fe920c52b4cd4` |
-| 干净检出 | 构建用时 8 分钟，19 个 Gradle 任务实际执行。5 套件共 21 项测试全部通过，无跳过。[QA Check](https://github.com/SeGroup11/scrum-workspace/runs/138292777291) |
-| 慢模型 | 成功与 HTTP 503 各一次 POST，从分析开始到请求完成分别为 10,811 ms 与 10,029 ms。真实 PyCharm 的首帧计时见本节后文。[原始计时](../evidence/candidate-e66ed31/junit/TEST-team.segroup11.review.SlowWorkflowTest.xml) |
-| 候选视频 | 133 秒中文字幕。前 64 秒用候选 SDK 与 Swing 测试编辑框演示逐字引文、Tab、改写和伪引文失败。后 69 秒使用 WebStorm 与 PyCharm 实机截帧，含真实评论回执、旧版显示缺陷及按原采样间隔回放的十秒重试。[演示说明](demo-and-debug.zh-CN.md) |
+| Sprint 1 的受控 GitHub 测试通过后，Verifier 仍拒绝了同阶段的 ZIP，原因是插件显示名称。 | `4bc2b85` 修改描述符，四款兼容复测。后续 Check 同时固定提交与 ZIP 摘要。[失败记录](https://github.com/SeGroup11/scrum-workspace/runs/138262252679) · [修复复测](https://github.com/SeGroup11/scrum-workspace/runs/138265147006) |
+| `f8e1c4a` 缺少分类理由与非适用组折叠。随后 0.2.0 的实机连接又将身份核验与读取仓库失败混作同一提示。 | `2974097` 补足报告视图。0.2.1 加入原账号重新认证及分阶段提示。WebStorm 实机指出账号身份已核实，但 JetBrains OAuth 应用在组织中受限。用户完成 Grant 后，能实际读取 #16、#17。[视图修复](https://github.com/SeGroup11/scrum-workspace/commit/29740976e138e3e3566c1d222e5963f4c4bd5c54) · [0.2.0 实机原始记录](../evidence/acceptance-0.2.0.md) · [0.2.1 权限证据](../evidence/candidate-e66ed31/gui/webstorm.md) |
+| 0.2.1 的 WebStorm 在 #17 显式发出评论 7125780145。服务器作者、正文正确；本地仍显示未知作者、日期和 0 条评论。 | 0.2.2 使用真实 GitHub 字段并刷新本地计数。PyCharm 在 #16 发出 7126271956，作者 material4002，计数从 0 增至 1，在途新稿保留；#17 当时仍为 1。前后均有独立 API 回读。[旧版评论](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7125780145) · [修复提交](https://github.com/SeGroup11/scrum-workspace/commit/267063f8d7fc2d321f03d386b2ce9c64553c916c) · [0.2.2 评论](https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126271956) |
+| 0.2.2 首次激活无历史快照的原生任务后，右侧面板变空；之后由原生菜单切回有快照的 A、B 均正确。 | 0.2.3 改为保留显式选中的 Issue。真实 PyCharm 首次激活先前没有快照的 #20，待原生异步标题稳定，顶栏、选中行及右侧正文都指向 #20。较早的过渡帧里顶栏仍为 #17。[0.2.2 原生菜单证据](../evidence/candidate-267063f/gui/pycharm.md) · [0.2.3 稳定帧](../evidence/candidate-3f9c974/gui/pycharm-live/2026-11-24T09-02-38-990Z-fresh-20-stable-title-and-detail.jpg) |
+| 0.2.3 在有两个账号、两个受控仓库的生产工具窗口中，手选 B 后再重新检测，账号与仓库仍正确，但遗留 A 定位让右侧变空。正常关闭再打开项目则可恢复 B。 | 0.2.4 已按同一顺序复测，使用同一生产窗口观察器与相同模拟身份和仓库。显式选择 B 后，待恢复的 A 指针立即清除。A 的详情和评论延迟返回、同窗重新检测、正常关闭再开，三次观察均保持 B 的详情、回复目标和最新草稿。[0.2.3 原失败序列](../evidence/candidate-3f9c974/window-race/result.txt) · [0.2.4 原始通过序列](../evidence/candidate-3cdfc4b/window-race/result.txt) · [0.2.4 修复提交](https://github.com/SeGroup11/scrum-workspace/commit/3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835) |
 
-[Sprint 3 PR #21](https://github.com/SeGroup11/scrum-workspace/pull/21) · [正式候选的逐项证据](../evidence/index.md) · [四款 IDE 验收故事](https://github.com/SeGroup11/scrum-workspace/issues/14)
+0.2.1 的真实 PyCharm 在慢成功、503 和重试三次操作中，首帧为 6、5、19 ms，完成为 10,910、10,041、10,014 ms，各产生一次模型 POST。0.2.2 在真实 PyCharm 的成功回合测得 9 ms 首帧和 10,622 ms 完成。各版都单独保留了原始证据和课程文件。[0.2.1 历史草稿](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-c616ca1c718dbf3bdfbf) · [0.2.2 历史草稿](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-9ac4cd6d61db5fa5e910) · [0.2.3 历史草稿](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-07d4af22255ffb0c13ac)
 
-Plugin Verifier 1.411 对同一 SHA-256 的四次判定均为 Compatible，每个产品报告 5 处弃用 API、6 处实验性 API。此次二进制检查覆盖 IU-262.10315.125、WS-262.10315.144、RD-262.9437.287 和 PY-262.9437.214。版本升级时需重新核对这些调用。N3 同时要求磁盘安装、私仓、慢分析、任务与重启、真实评论五组观察。[四款逐项检查](../evidence/candidate-e66ed31/verifier/result.json) · [Verifier Check](https://github.com/SeGroup11/scrum-workspace/runs/138294759169)
+0.2.3 PyCharm 的报告 `ce24ab60-0102-44e1-b833-ab252a3d02dd` 在真实 #16 经历了三种状态。仅新增评论后刷新，仍显示当前报告。临时修改正文再刷新，界面提示“基于较早版本”。09:09:57 UTC 从 GitHub 读回原正文时，摘要与改动前逐字相符；再刷新后，同一报告恢复为当前。两份工作区记录的报告 ID、输入摘要、草稿修订 15 和末尾两个空格全部相同。[改动前的报告](../evidence/candidate-3f9c974/gui/pycharm-live/state-after-comment-before-body.json) · [过期提示](../evidence/candidate-3f9c974/gui/pycharm-live/2026-11-24T09-09-18-254Z-temporary-body-stale-report-with-unchanged-new-draft.jpg) · [GitHub 还原回读](../evidence/candidate-3f9c974/github/body-restore.json) · [最终报告与草稿](../evidence/candidate-3f9c974/gui/pycharm-live/state-restored-original-body.json)
 
-随后以这份锁定的 ZIP 执行 Gradle 原生 `verifyPlugin`。两项任务实际运行，四个目标均再次判定 Compatible，总耗时 12 分 57 秒，插件与依赖下载量为 0 B。[原生任务输出](../evidence/candidate-e66ed31/verifier/gradle-verifyPlugin.txt)
+在 0.2.3 的丢回执专项中，直接载入候选 JAR 接受受控 GitHub 响应。已确定的 403 没有新增远端记录，显式重试落下一条；另一次模拟先写入再断开。两次查询原 Issue #42 后按评论 ID 合并为两条，另一 Issue #43 始终为零。三个 POST 均来自显式动作，重复点击和重启没有增加 POST。这项使用受控服务器，和下面三款主账号发评的 GitHub 远端回执分别核验。[丢回执原始记录](../evidence/candidate-3f9c974/comment-recovery/result.txt) · [丢回执 Check](https://github.com/SeGroup11/scrum-workspace/runs/138344717870) · [双仓重检失败 Check](https://github.com/SeGroup11/scrum-workspace/runs/138343396521)
 
-在各产品的隔离配置中另运行了无界面模型探针。IntelliJ IDEA 和 PyCharm 各通过候选包内的 SDK 向回环服务发出两次请求，JSON 对象与严格 Schema 模式均解析出 feature。WebStorm 和 Rider 的隔离配置在执行探针前因缺少有效许可证而退出。[四款运行时结果](../evidence/candidate-e66ed31/runtime/result.json) · [运行时 Check](https://github.com/SeGroup11/scrum-workspace/runs/138294767613)
+### 从服务器独立回读的 0.2.3 评论
 
-正常配置的 IntelliJ IDEA 从磁盘安装了同一 ZIP，动态加载日志列出 0.2.1，工具窗口成功打开。账号列表为空时，窗口提示前往 IDE GitHub 设置。通过 GitHub 官方登录后，重新检测识别了用户主账号和项目远端；身份已核实，读取组织私仓仍被拒绝。[IDEA 日志与实机截图](../evidence/candidate-e66ed31/gui/idea.md)
+发评前两条专用 Issue 各有一条历史评论。下表的数量取自每次发布后的 GitHub API，只计到当次观察时刻。各次回执作者均为 `material4002`，不同产品在正文中使用不同标记。[发评前基线](../evidence/candidate-3f9c974/github/before.json)
 
-在正常配置的 WebStorm 中，从磁盘选取 0.2.1 ZIP 并正常重启，启动日志读回了版本，Issue Review 工具窗口可见。所选 IDE 主账号身份核验成功。读取组织私仓时窗口明确提示“账号身份已核实，GitHub 未允许访问此仓库”。GitHub 官方应用授权页面当时将 SeGroup11 列为 Restricted，并提供 Grant。该次观测验证了安装和分阶段提示，私仓正文、任务与重启恢复、首帧和远端评论回执仍待实测。[WebStorm 观察](../evidence/candidate-e66ed31/gui/webstorm.md) · [实机截图](../evidence/candidate-e66ed31/gui/webstorm-repository-denied.png)
-
-在 PyCharm 中，从磁盘安装时 IDE 先提示依赖未知，随后明确确认插件已安装并要求重启。正常重启后，日志列出 0.2.1。打开 Issue Review、选取项目仓库与账号后，插件同样核实了账号身份，读取私仓时遭到拒绝。这次观察验证了该产品的安装与权限提示。[依赖提示](../evidence/candidate-e66ed31/gui/pycharm-disk-unknown-dependencies.jpg) · [安装确认](../evidence/candidate-e66ed31/gui/pycharm-disk-installed-restart.jpg) · [权限反馈](../evidence/candidate-e66ed31/gui/pycharm-repository-denied.jpg)
-
-在同一 PyCharm 的模型设置页填写回环地址、模型 ID 和临时密钥，点击 Apply 后，地址与模型 ID 保留，密码框清空。另输入一次尚未提交的密钥，再修改地址，密码框随即清空。读回应用配置 XML 时，仅看到回环地址和模型 ID。此轮没有从 GUI 的私仓 Issue 触发模型请求。[PyCharm 设置过程和原始截图](../evidence/candidate-e66ed31/gui/pycharm.md)
-
-同一 ZIP 另在 PyCharm 的无界面运行时验证了凭据的实际读取。地址 A 保存的临时密钥可取回；改为地址 B 且留空后，候选提示该服务缺少密钥；切回 A 时再次取回原值。两个不同项目分别打开已注册的设置表单，都读到相同的应用级地址与模型。这次观察器没有发送模型请求。[实际验证输出](../evidence/candidate-e66ed31/settings/result.txt) · [复跑方法](../evidence/candidate-e66ed31/settings/README.md)
-
-QA 独立记录了专用 Issue 的基线。测试开始前 #16、#17 的评论数均为 0，WebStorm 与 PyCharm 首轮仓库访问被拒后仍为 0。这两次读回为后续显式发送的增量核验提供了对照。[测试前](../evidence/candidate-e66ed31/github/before.json) · [拒绝后的读回](../evidence/candidate-e66ed31/github/after-repository-denial.json) · [实机 Check](https://github.com/SeGroup11/scrum-workspace/runs/138297958418)
-
-用户授予 SeGroup11 的组织权限后，WebStorm 0.2.1 读取了私仓列表、#16 长正文与 #17 的 CSV 需求。在 B 的草稿中输入“[CS5351 WS 0.2.1] 请确认典型导出数据量，以及该规模下可接受的完成时间。”并显式发送一次。GitHub 原始 API 在 #17 读回评论 **7125780145**，作者 **material4002**，全文逐字一致。时间为 2026-11-24 08:08:49 UTC。#16 仍为 0 条，#17 从 0 增至 1 条。[真实 B 正文](../evidence/candidate-e66ed31/gui/webstorm-real-b.png) · [发送前](../evidence/candidate-e66ed31/gui/webstorm-before-send.png) · [远端评论](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7125780145) · [独立读回](../evidence/candidate-e66ed31/github/webstorm-receipt.json)
-
-这次成功发评揭示了 0.2.1 的两处显示错误。Issue 与评论作者、日期显示未知；回执和评论 ID 已进入讨论窗口，本地计数仍显示 0。该版本通过了这次远端发评子项，本地元数据与计数仍需修复复测。[发布后实机截图](../evidence/candidate-e66ed31/gui/webstorm-after-send.png)
-
-获授权的 PyCharm 随后从私仓读到 A/B，对 #16 在真实工具窗口完成三轮慢分析。成功、503 失败、显式重试的首次状态绘制分别为 **6、5、19 ms**，插件记录的完成耗时为 **10,910、10,041、10,014 ms**。服务每轮各收到一次 POST。等待期间可滚动 A、编辑或切到 B。503 后 A 的旧报告可读，Tab 将预览建议插入已有草稿。重试返回时仍停留在 B，切回 A 可见成功报告。该产品在此轮未发送评论。[按时间排序的 GUI 截图与实测说明](../evidence/candidate-e66ed31/gui/pycharm-live/README.md)
-
-## 两次实测推动的修复
-
-答辩走查发现 `f8e1c4a` 只显示分类结果，分类理由与非适用组的折叠缺失。`2974097` 补上两项，并新增默认列表、展开顺序、mixed 与 undetermined 展示的回归。[报告展示修复](https://github.com/SeGroup11/scrum-workspace/commit/29740976e138e3e3566c1d222e5963f4c4bd5c54)
-
-0.2.0 的普通 WebStorm 和隔离 PyCharm 均能选中主账号，连接私仓时却只显示笼统的认证失败。0.2.1 提供原账号重新认证入口，区分核验身份、检查仓库和读取 Issue 的错误，并显示项目根短名与 remote 别名。WebStorm 的复测已把阻点定位到组织授权；上表与本节实机结论绑定到各自的候选。[0.2.0 原始实机记录](../evidence/acceptance-0.2.0.md) · [认证修复](https://github.com/SeGroup11/scrum-workspace/commit/380be1b) · [当前逐项矩阵](../evidence/acceptance.md) · [演示步骤与跨组复现](demo-and-debug.zh-CN.md)
+| IDE 与目标 | 远端时间（UTC） | 评论 ID | 当时 #16、#17 数量 |
+| --- | --- | --- | --- |
+| PyCharm → #16 | 09:04:03 | [7126914405](https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126914405) | 2、1。[独立回执](../evidence/candidate-3f9c974/github/pycharm-receipt.json) |
+| IntelliJ IDEA → #17 | 09:12:58 | [7127110320](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127110320) | 2、2。[独立回执](../evidence/candidate-3f9c974/github/idea-receipt.json) |
+| WebStorm → #17 | 09:16:29 | [7127188425](https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127188425) | 2、3。[独立回执](../evidence/candidate-3f9c974/github/webstorm-receipt.json) |

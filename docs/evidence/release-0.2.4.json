@@ -1,0 +1,52 @@
+{
+  "draftId": 456546396,
+  "draft": true,
+  "tag": "v0.2.4-rc.1",
+  "target": "3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835",
+  "url": "https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-4faddeae775f307d6e48",
+  "checkedUtc": "2026-11-24T10:11:10.0396565+00:00",
+  "assets": [
+    {
+      "name": "github-issue-review-0.2.4.zip",
+      "bytes": 75393535,
+      "sha256": "a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709",
+      "id": 786535367,
+      "state": "uploaded"
+    },
+    {
+      "name": "CS5351-Group11-demo-0.2.4.mp4",
+      "bytes": 2419538,
+      "sha256": "3f1a154eef6e9d351e9d2908ea65998d9d489bcb1c0b4914d107f9564e432be4",
+      "id": 786619508,
+      "state": "uploaded"
+    },
+    {
+      "name": "candidate-3cdfc4b-evidence.zip",
+      "bytes": 22977393,
+      "sha256": "453e62fc9790e0b8bdbb750c0e75f2a4f515b0c8c4524d15b2345719bd2add02",
+      "id": 786657928,
+      "state": "uploaded"
+    },
+    {
+      "name": "CS5351-Group11-defense.pptx",
+      "bytes": 457561,
+      "sha256": "ccdf8fa3ecf7f24dbf3208a29f4ba9d1eb53a2943535cfc1956bf732fec65f80",
+      "id": 786619197,
+      "state": "uploaded"
+    },
+    {
+      "name": "report.zh-CN.md",
+      "bytes": 31161,
+      "sha256": "2cc0bb733b9d5a0b4b8abdb9370d994bdcf080d2d032f7cfecdd2b0e52e58f06",
+      "id": 786657636,
+      "state": "uploaded"
+    },
+    {
+      "name": "demo-and-debug.zh-CN.md",
+      "bytes": 12638,
+      "sha256": "56b399ae0d8476e52ac02d6c9875febbc38af03a02be94db4279382ce5f8c574",
+      "id": 786631070,
+      "state": "uploaded"
+    }
+  ]
+}

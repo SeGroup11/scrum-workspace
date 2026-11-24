@@ -33,7 +33,12 @@ $props | Set-Content -LiteralPath "$dir/isolated.properties" -Encoding utf8NoBOM
 $envForTest = @{ PYCHARM_VM_OPTIONS="$dir/isolated.vmoptions"; PYCHARM_PROPERTIES="$dir/isolated.properties" }
 Write-Host $dir
 $p = Start-Process -FilePath "$PyCharm/bin/pycharm64.exe" -ArgumentList 'group11WindowProbe' -PassThru -WorkingDirectory $dir -WindowStyle Hidden -Environment $envForTest -RedirectStandardOutput "$dir/stdout.log" -RedirectStandardError "$dir/stderr.log"
-if (!$p.WaitForExit(60000)) { throw 'Window observer exceeded 60 seconds.' }
+if (!$p.WaitForExit(60000)) {
+    # This handle belongs to the isolated observer launched on the preceding line.
+    $p.Kill()
+    $p.WaitForExit()
+    throw 'Window observer exceeded 60 seconds; preserved its isolated logs.'
+}
 $result = @(Get-Content -LiteralPath "$dir/result.txt")
 $result
 if ($p.ExitCode -ne 0 -or $result[-1] -ne 'PASS') { throw 'At least one window race condition failed.' }

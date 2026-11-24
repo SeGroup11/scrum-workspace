@@ -2,7 +2,7 @@
 
 CS5351 Group 11 的 JetBrains 插件。打开项目中的 **Issue Review** 窗口，选定 GitHub 仓库和 IDE 账号，即可浏览 Issue，在原文旁查看六项质量检查，并把改写后的建议作为评论发回当前 Issue。
 
-当前候选为 **0.2.4**。在私有发布列表中选 `v0.2.4-rc.1`，下载 `github-issue-review-0.2.4.zip`。安装包共 75,393,535 字节，SHA-256 为 `a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709`。[发布列表](https://github.com/SeGroup11/scrum-workspace/releases) · [锁定源码](https://github.com/SeGroup11/scrum-workspace/commit/3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835) · [逐项验收矩阵](docs/evidence/acceptance.md)
+当前候选为 **0.2.4**。在私有发布列表中选 `v0.2.4-rc.1`，下载 `github-issue-review-0.2.4.zip`。安装包共 75,393,535 字节，SHA-256 为 `a98dee22e68630481c65107efb13a2a4604da26cd6140f9bb5abd3db3b823709`。[0.2.4 私有发布草稿](https://github.com/SeGroup11/scrum-workspace/releases/tag/untagged-4faddeae775f307d6e48) · [六份资产摘要](docs/evidence/release-0.2.4.json) · [锁定源码](https://github.com/SeGroup11/scrum-workspace/commit/3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835) · [逐项验收矩阵](docs/evidence/acceptance.md)
 
 ## 安装与使用
 

@@ -1,0 +1,77 @@
+{
+  "observedUtc": "2026-11-24T09:44:04.4189712+00:00",
+  "candidate": "3cdfc4b5ccf22dd3792d6ade3c8952e9b32b0835",
+  "source": "Independent read-only QA API after explicit pycharm send",
+  "target": 16,
+  "expectedBody": "[CS5351 PY 0.2.4] 批次 A 有三行搜索结果，导出的 CSV 却仅有表头。请给出这三行的预期导出值和复现时使用的版本。",
+  "receipt": {
+    "id": 7127797042,
+    "author": "material4002",
+    "body": "[CS5351 PY 0.2.4] 批次 A 有三行搜索结果，导出的 CSV 却仅有表头。请给出这三行的预期导出值和复现时使用的版本。",
+    "created_at": "2026-11-24T09:43:17Z",
+    "url": "https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7127797042"
+  },
+  "issues": [
+    {
+      "number": 16,
+      "count": 3,
+      "comments": [
+        {
+          "id": 7126271956,
+          "author": "material4002",
+          "body": "[CS5351 PY 0.2.2] 根据复现记录，导出的 CSV 只有表头。请补充输入行数、预期导出的行数，以及用于复现的版本。",
+          "created_at": "2026-11-24T08:33:05Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126271956"
+        },
+        {
+          "id": 7126914405,
+          "author": "material4002",
+          "body": "[CS5351 PY 0.2.3] 复现记录写明 CSV 只有表头。请补充一组输入记录及其期望的导出行数，便于核对修复。",
+          "created_at": "2026-11-24T09:04:03Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7126914405"
+        },
+        {
+          "id": 7127797042,
+          "author": "material4002",
+          "body": "[CS5351 PY 0.2.4] 批次 A 有三行搜索结果，导出的 CSV 却仅有表头。请给出这三行的预期导出值和复现时使用的版本。",
+          "created_at": "2026-11-24T09:43:17Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/16#issuecomment-7127797042"
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "count": 4,
+      "comments": [
+        {
+          "id": 7125780145,
+          "author": "material4002",
+          "body": "[CS5351 WS 0.2.1] 请确认典型导出数据量，以及该规模下可接受的完成时间。",
+          "created_at": "2026-11-24T08:08:49Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7125780145"
+        },
+        {
+          "id": 7127110320,
+          "author": "material4002",
+          "body": "[CS5351 IDEA 0.2.3] 请确认典型导出数据量，以及该规模下可接受的完成时间。",
+          "created_at": "2026-11-24T09:12:58Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127110320"
+        },
+        {
+          "id": 7127188425,
+          "author": "material4002",
+          "body": "[CS5351 WS 0.2.3] 请确认典型导出数据量，以及该规模下可接受的完成时间。",
+          "created_at": "2026-11-24T09:16:29Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127188425"
+        },
+        {
+          "id": 7127681925,
+          "author": "material4002",
+          "body": "[CS5351 IDEA 0.2.4] 请确认典型导出数据量，以及该规模下可接受的完成时间。",
+          "created_at": "2026-11-24T09:38:09Z",
+          "url": "https://github.com/SeGroup11/scrum-workspace/issues/17#issuecomment-7127681925"
+        }
+      ]
+    }
+  ]
+}
